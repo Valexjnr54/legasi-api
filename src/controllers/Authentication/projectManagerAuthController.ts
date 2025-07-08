@@ -50,7 +50,8 @@ export async function loginProjectManager(request: Request, response: Response) 
             email: user.email,
             fullname: user.fullname,
             profile_image: user.profile_image,
-            email_verification: user.email_verified
+            email_verification: user.email_verified,
+            role: user.role
           }, 
           Config.secret,
           { expiresIn: '24h' } // Add token expiration

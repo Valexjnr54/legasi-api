@@ -120,7 +120,8 @@ export async function loginAdmin(request: Request, response: Response) {
         adminId: admin.id, 
         email: admin.email,
         fullname: admin.fullname,
-        profile_image: admin.profile_image
+        profile_image: admin.profile_image,
+        role: admin.role
       }, 
       Config.secret,
       { expiresIn: '24h' } // Add token expiration
