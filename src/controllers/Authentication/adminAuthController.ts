@@ -136,7 +136,8 @@ export async function loginAdmin(request: Request, response: Response) {
         id: admin.id,
         email: admin.email,
         fullname: admin.fullname,
-        profile_image: admin.profile_image
+        profile_image: admin.profile_image,
+        role: admin.role
         // Exclude password and other sensitive fields
       }
     });
