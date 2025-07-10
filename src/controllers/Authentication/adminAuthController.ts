@@ -134,7 +134,7 @@ export async function loginAdmin(request: Request, response: Response) {
       token,
       admin
     });
-    git commit -m "Fixing the project manager login response to match the admin"
+    
   } catch (error) {
     console.error('Login error:', error);
     response.status(500).json({ 
