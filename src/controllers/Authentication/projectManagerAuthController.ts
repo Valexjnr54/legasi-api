@@ -145,12 +145,80 @@ export async function verifyProjectEmail(request: Request, response: Response){
       data: {
         email_verified: true,
         verification_code: null, 
+        status: "Active"
       },
     });
 
     return response.status(200).json({ status: "success", message: "Email verified successfully." });
   } catch (error) {
     console.error("Email Verification Error:", error);
+    return response.status(500).json({ status: "error", message: "Something went wrong." });
+  }
+}
+
+export async function changeProjectManagerTemporalPassword(request: Request, response: Response) {
+  const project_id = request.user.projectId;
+  if (!project_id) {
+    return response.status(403).json({ message: 'Unauthorized User' });
+  }
+  
+  await body('newPassword')
+    .isLength({ min: 8 }).withMessage('New password must be at least 8 characters')
+    .matches(/[A-Z]/).withMessage('New password must contain at least one uppercase letter')
+    .matches(/[a-z]/).withMessage('New password must contain at least one lowercase letter')
+    .matches(/[0-9]/).withMessage('New password must contain at least one number')
+    .matches(/[\W]/).withMessage('New password must contain at least one special character')
+    .run(request);
+
+  await body('confirmPassword')
+    .notEmpty().withMessage('Password confirmation is required')
+    .run(request);
+
+  const result = validationResult(request);
+  const errors = result.array();
+
+  // Manually confirm password match
+  if (request.body.newPassword !== request.body.confirmPassword) {
+    return response.status(422).json({ status: "fail", errors:"Password do not match" });
+  }
+
+  if (errors.length > 0) {
+    return response.status(422).json({ status: "fail", errors });
+  }
+
+  // Retrieve the user by user_id
+    const project_manager = await prisma.project_manager.findUnique({ where: { id: project_id } });
+    const role = project_manager?.role;
+
+  if (role !== 'project_manager') {
+      return response.status(403).json({ message: 'Unauthorized User' });
+  }
+
+  const { newPassword } = request.body;
+  const userId = request.user?.id;
+
+  try {
+    const user = await prisma.project_manager.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      return response.status(404).json({ status: "fail", message: "User not found." });
+    }
+
+    const hashedPassword = await argon2.hash(newPassword);
+
+    await prisma.project_manager.update({
+      where: { id: userId },
+      data: {
+        password: hashedPassword,
+        temporal_password: false
+      },
+    });
+
+    return response.status(200).json({ status: "success", message: "Password updated successfully." });
+  } catch (error) {
+    console.error("Change Password Error:", error);
     return response.status(500).json({ status: "error", message: "Something went wrong." });
   }
 }

@@ -11,3 +11,4 @@ projectAuthRouter.post('/login', loginProjectManager);
 projectAuthRouter.post('/logout', authenticateJWT, logoutProjectManager);
 projectAuthRouter.post('/email-verification', authenticateJWT, verifyProjectEmail);
 projectAuthRouter.post('/change-password', authenticateJWT, changeProjectManagerPassword);
+projectAuthRouter.post('/change-temp-password', authenticateJWT, changeProjectManagerPassword);
