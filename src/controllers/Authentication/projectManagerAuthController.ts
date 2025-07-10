@@ -29,8 +29,13 @@ export async function loginProjectManager(request: Request, response: Response) 
         return response.status(401).json({ error: 'Invalid email/username or password' });
       }
 
+      if (!user.password.startsWith('$argon2')) {
+        console.error('Password format is invalid:', user.password);
+        return response.status(400).json({ message: 'Invalid password format in database' });
+      }
+
     // Verify the password
-    const passwordMatch = await argon2.verify(password, user.password);
+    const passwordMatch = await argon2.verify(user.password, password);
 
     if (!passwordMatch) {
       response.status(401).json({ error: 'Invalid email or password' });
