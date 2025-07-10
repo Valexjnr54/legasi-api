@@ -116,6 +116,9 @@ export async function allProjectManager(request: Request, response: Response) {
         phone_number:true,
         role:true,
         profile_image:true,
+        status:true,
+        temporal_password:true,
+        email_verified:true,
         createdAt: true,
         updatedAt: true
       },
