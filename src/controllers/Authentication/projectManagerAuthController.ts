@@ -157,11 +157,12 @@ export async function verifyProjectEmail(request: Request, response: Response){
 }
 
 export async function changeProjectManagerTemporalPassword(request: Request, response: Response) {
-  const project_id = request.user.projectId;
+  const project_id = request.user?.projectId;
+
   if (!project_id) {
     return response.status(403).json({ message: 'Unauthorized User' });
   }
-  
+
   await body('newPassword')
     .isLength({ min: 8 }).withMessage('New password must be at least 8 characters')
     .matches(/[A-Z]/).withMessage('New password must contain at least one uppercase letter')
@@ -177,44 +178,31 @@ export async function changeProjectManagerTemporalPassword(request: Request, res
   const result = validationResult(request);
   const errors = result.array();
 
-  // Manually confirm password match
   if (request.body.newPassword !== request.body.confirmPassword) {
-    return response.status(422).json({ status: "fail", errors:"Password do not match" });
+    return response.status(422).json({ status: "fail", errors: "Passwords do not match" });
   }
 
   if (errors.length > 0) {
     return response.status(422).json({ status: "fail", errors });
   }
 
-  if (!project_id) {
-    // throw new Error("Missing project manager ID");
-    return response.status(400).json({ message: 'Missing project manager ID', data:project_id });
-  }
-
-  // Retrieve the user by user_id
-    const project_manager = await prisma.project_manager.findUnique({ where: { id: project_id } });
-    const role = project_manager?.role;
-
-  if (role !== 'project_manager') {
-      return response.status(403).json({ message: 'Unauthorized User' });
-  }
-
-  const { newPassword } = request.body;
-  const userId = request.user?.id;
-
   try {
     const user = await prisma.project_manager.findUnique({
-      where: { id: userId },
+      where: { id: project_id },
     });
 
     if (!user) {
       return response.status(404).json({ status: "fail", message: "User not found." });
     }
 
-    const hashedPassword = await argon2.hash(newPassword);
+    if (user.role !== 'project_manager') {
+      return response.status(403).json({ message: 'Unauthorized User' });
+    }
+
+    const hashedPassword = await argon2.hash(request.body.newPassword);
 
     await prisma.project_manager.update({
-      where: { id: userId },
+      where: { id: project_id },
       data: {
         password: hashedPassword,
         temporal_password: false
