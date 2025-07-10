@@ -132,15 +132,9 @@ export async function loginAdmin(request: Request, response: Response) {
       success: true,
       message: 'Login successful',
       token,
-      admin: {
-        id: admin.id,
-        email: admin.email,
-        fullname: admin.fullname,
-        profile_image: admin.profile_image,
-        role: admin.role
-        // Exclude password and other sensitive fields
-      }
+      admin
     });
+    git commit -m "Fixing the project manager login response to match the admin"
   } catch (error) {
     console.error('Login error:', error);
     response.status(500).json({ 

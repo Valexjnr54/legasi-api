@@ -62,7 +62,12 @@ export async function loginProjectManager(request: Request, response: Response) 
           { expiresIn: '24h' } // Add token expiration
         );
 
-    response.status(200).json({ token, user });
+      response.status(200).json({ 
+        token,
+        success: true,
+        message: 'Login successful',
+        user
+       });
   } catch (error) {
     console.error(error);
     response.status(500).json({ message: 'Internal Server Error' });
