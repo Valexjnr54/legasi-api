@@ -186,6 +186,11 @@ export async function changeProjectManagerTemporalPassword(request: Request, res
     return response.status(422).json({ status: "fail", errors });
   }
 
+  if (!project_id) {
+    // throw new Error("Missing project manager ID");
+    return response.status(400).json({ message: 'Missing project manager ID', data:project_id });
+  }
+
   // Retrieve the user by user_id
     const project_manager = await prisma.project_manager.findUnique({ where: { id: project_id } });
     const role = project_manager?.role;
@@ -255,6 +260,11 @@ export async function changeProjectManagerPassword(request: Request, response: R
 
   if (errors.length > 0) {
     return response.status(422).json({ status: "fail", errors });
+  }
+
+  if (!project_id) {
+    // throw new Error("Missing project manager ID");
+    return response.status(400).json({ message: 'Missing project manager ID', data:project_id });
   }
 
   // Retrieve the user by user_id
