@@ -42,6 +42,36 @@ model project_manager {
   temporal_password  Boolean              @default(true) 
   createdAt     DateTime  @default(now())
   updatedAt     DateTime @updatedAt
+  project project[]
+}
+
+model project {
+  id Int @id @default(autoincrement())
+  project_name String
+  project_manager                     project_manager       @relation(fields: [project_manager_id], references: [id], onDelete: Cascade)
+  project_manager_id                  Int
+  start_date DateTime
+  end_date DateTime
+  description          String            @db.Text
+  target_entry Int
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime @updatedAt
+  data_entry data_entry[]
+}
+
+model data_entry {
+  id Int @id @default(autoincrement())
+  project                     project       @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  project_id                  Int
+  date DateTime
+  location String
+  description          String            @db.Text
+  image_url String?
+  video_url String?
+  document_url String?
+  metadata     Json?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 enum Role {
@@ -52,7 +82,7 @@ enum Role {
 enum Status {
   Available
   Pending
-  Sold
+  Completed
   Rejected
   Approved
   Inactive

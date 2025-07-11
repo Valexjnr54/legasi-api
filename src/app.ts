@@ -8,6 +8,7 @@ import { Server as SocketIOServer } from 'socket.io';
 import { adminAuthRouter } from './routes/auth/adminAuthRoute';
 import { adminRouter } from './routes/admin/adminRoutes';
 import { projectAuthRouter } from './routes/auth/projectAuthRoute';
+import { projectRouter } from './routes/project_manager/project_managerRoutes';
 
 const app = express();
 
@@ -52,6 +53,7 @@ app.use(`${route}/auth`, adminAuthRouter);
 app.use(`${route}/auth/project-manager`, projectAuthRouter);
 
 app.use(`${route}/admin`, adminRouter);
+app.use(`${route}/project-manager`, projectRouter);
 
 // Add this after all your routes but before the 404 handler
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {

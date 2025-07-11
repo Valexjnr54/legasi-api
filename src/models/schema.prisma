@@ -28,20 +28,51 @@ model admin {
 }
 
 model project_manager {
-  id                Int      @id @default(autoincrement())
+  id                Int       @id @default(autoincrement())
   fullname          String
-  username          String   @unique
-  email             String   @unique
-  phone_number      String   @unique
-  role              Role     @default(project_manager)
+  username          String    @unique
+  email             String    @unique
+  phone_number      String    @unique
+  role              Role      @default(project_manager)
   profile_image     String?
   verification_code String?
-  email_verified    Boolean  @default(false)
-  status            Status   @default(Inactive)
+  email_verified    Boolean   @default(false)
+  status            Status    @default(Inactive)
   password          String
-  temporal_password Boolean  @default(true)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  temporal_password Boolean   @default(true)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  project           project[]
+}
+
+model project {
+  id                 Int             @id @default(autoincrement())
+  project_name       String
+  project_manager    project_manager @relation(fields: [project_manager_id], references: [id], onDelete: Cascade)
+  project_manager_id Int
+  start_date         DateTime
+  end_date           DateTime
+  description        String          @db.Text
+  target_entry       Int
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+  data_entry         data_entry[]
+}
+
+model data_entry {
+  id           Int      @id @default(autoincrement())
+  project      project  @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  project_id   Int
+  date         DateTime
+  location     String
+  description  String   @db.Text
+  image_url    String?
+  video_url    String?
+  document_url String?
+  file         String?
+  metadata     Json?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 enum Role {
@@ -52,7 +83,7 @@ enum Role {
 enum Status {
   Available
   Pending
-  Sold
+  Completed
   Rejected
   Approved
   Inactive

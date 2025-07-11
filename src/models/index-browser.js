@@ -148,9 +148,41 @@ exports.Prisma.Project_managerScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ProjectScalarFieldEnum = {
+  id: 'id',
+  project_name: 'project_name',
+  project_manager_id: 'project_manager_id',
+  start_date: 'start_date',
+  end_date: 'end_date',
+  description: 'description',
+  target_entry: 'target_entry',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.Data_entryScalarFieldEnum = {
+  id: 'id',
+  project_id: 'project_id',
+  date: 'date',
+  location: 'location',
+  description: 'description',
+  image_url: 'image_url',
+  video_url: 'video_url',
+  document_url: 'document_url',
+  file: 'file',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.NullsOrder = {
@@ -174,6 +206,31 @@ exports.Prisma.project_managerOrderByRelevanceFieldEnum = {
   verification_code: 'verification_code',
   password: 'password'
 };
+
+exports.Prisma.projectOrderByRelevanceFieldEnum = {
+  project_name: 'project_name',
+  description: 'description'
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
+
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+};
+
+exports.Prisma.data_entryOrderByRelevanceFieldEnum = {
+  location: 'location',
+  description: 'description',
+  image_url: 'image_url',
+  video_url: 'video_url',
+  document_url: 'document_url',
+  file: 'file'
+};
 exports.Role = exports.$Enums.Role = {
   project_manager: 'project_manager',
   super_admin: 'super_admin'
@@ -182,7 +239,7 @@ exports.Role = exports.$Enums.Role = {
 exports.Status = exports.$Enums.Status = {
   Available: 'Available',
   Pending: 'Pending',
-  Sold: 'Sold',
+  Completed: 'Completed',
   Rejected: 'Rejected',
   Approved: 'Approved',
   Inactive: 'Inactive',
@@ -192,7 +249,9 @@ exports.Status = exports.$Enums.Status = {
 
 exports.Prisma.ModelName = {
   admin: 'admin',
-  project_manager: 'project_manager'
+  project_manager: 'project_manager',
+  project: 'project',
+  data_entry: 'data_entry'
 };
 
 /**
