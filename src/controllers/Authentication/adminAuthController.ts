@@ -5,7 +5,6 @@ import crypto from 'crypto';
 import { PrismaClient } from '../../models';
 import { Config } from '../../config/config';
 import { body, validationResult } from "express-validator";
-import uploadImage from '../../utils/cloudinary';
 import fs from "fs"
 import { sendWelcomeEmail } from '../../utils/emailSender';
 import * as argon2 from 'argon2';
