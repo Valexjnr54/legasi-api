@@ -169,7 +169,6 @@ exports.Prisma.Data_entryScalarFieldEnum = {
   image_url: 'image_url',
   video_url: 'video_url',
   document_url: 'document_url',
-  file: 'file',
   metadata: 'metadata',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -228,8 +227,7 @@ exports.Prisma.data_entryOrderByRelevanceFieldEnum = {
   description: 'description',
   image_url: 'image_url',
   video_url: 'video_url',
-  document_url: 'document_url',
-  file: 'file'
+  document_url: 'document_url'
 };
 exports.Role = exports.$Enums.Role = {
   project_manager: 'project_manager',

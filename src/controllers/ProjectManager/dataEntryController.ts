@@ -3,12 +3,13 @@ import { PrismaClient } from '../../models';
 import { Config } from '../../config/config';
 import { body, validationResult } from 'express-validator';
 import fs from 'fs';
+import { project } from '../../models/index';
 
 const prisma = new PrismaClient();
 
 export async function createDataEntry(request: Request, response: Response) {
   const { project_id, date, location, description, image_url, video_url, document_url, metadata  } = request.body;
-  const project_manager_id = request.user.projectId;
+  const project_manager_id = request.user.id;
 
   // Check if user_id is not present or undefined
   if (!project_manager_id) {
@@ -45,7 +46,7 @@ export async function createDataEntry(request: Request, response: Response) {
         data: {
             project_id,
             location,
-            date,
+            date: new Date(date),
             image_url,
             video_url,
             document_url,
@@ -75,7 +76,7 @@ export async function createDataEntry(request: Request, response: Response) {
 
 export async function updateDataEntry(request: Request, response: Response) {
   const { project_id, date, location, description, image_url, video_url, document_url, metadata } = request.body;
-  const project_manager_id = request.user.projectId;
+  const project_manager_id = request.user.id;
   const id: number = parseInt(request.query.data_entry_id as string, 10)
 
   // Check if user_id is not present or undefined
@@ -150,7 +151,7 @@ export async function updateDataEntry(request: Request, response: Response) {
 }
 
 export async function allDataEntry(request: Request, response: Response) {
-  const project_manager_id = request.user.projectId;
+  const project_manager_id = request.user.id;
 
   // Check if user_id is not present or undefined
   if (!project_manager_id) {
@@ -195,7 +196,7 @@ export async function allDataEntry(request: Request, response: Response) {
 
 export async function singleDataEntry(request: Request, response: Response) {
   const id: number = parseInt(request.query.data_entry_id as string, 10)
-  const project_manager_id = request.user.projectId;
+  const project_manager_id = request.user.id;
 
   // Check if user_id is not present or undefined
   if (!project_manager_id) {
@@ -243,7 +244,7 @@ export async function singleDataEntry(request: Request, response: Response) {
 
 export async function deleteDataEntry(request: Request, response: Response) {
   const id: number = parseInt(request.query.project_id as string, 10)
-  const project_manager_id = request.user.projectId;
+  const project_manager_id = request.user.id;
 
   // Check if user_id is not present or undefined
   if (!project_manager_id) {

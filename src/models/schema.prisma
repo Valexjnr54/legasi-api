@@ -69,7 +69,6 @@ model data_entry {
   image_url    String?
   video_url    String?
   document_url String?
-  file         String?
   metadata     Json?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt

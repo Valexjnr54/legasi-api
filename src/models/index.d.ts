@@ -4319,7 +4319,6 @@ export namespace Prisma {
     image_url: string | null
     video_url: string | null
     document_url: string | null
-    file: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -4333,7 +4332,6 @@ export namespace Prisma {
     image_url: string | null
     video_url: string | null
     document_url: string | null
-    file: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -4347,7 +4345,6 @@ export namespace Prisma {
     image_url: number
     video_url: number
     document_url: number
-    file: number
     metadata: number
     createdAt: number
     updatedAt: number
@@ -4374,7 +4371,6 @@ export namespace Prisma {
     image_url?: true
     video_url?: true
     document_url?: true
-    file?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -4388,7 +4384,6 @@ export namespace Prisma {
     image_url?: true
     video_url?: true
     document_url?: true
-    file?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -4402,7 +4397,6 @@ export namespace Prisma {
     image_url?: true
     video_url?: true
     document_url?: true
-    file?: true
     metadata?: true
     createdAt?: true
     updatedAt?: true
@@ -4504,7 +4498,6 @@ export namespace Prisma {
     image_url: string | null
     video_url: string | null
     document_url: string | null
-    file: string | null
     metadata: JsonValue | null
     createdAt: Date
     updatedAt: Date
@@ -4538,7 +4531,6 @@ export namespace Prisma {
     image_url?: boolean
     video_url?: boolean
     document_url?: boolean
-    file?: boolean
     metadata?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4556,13 +4548,12 @@ export namespace Prisma {
     image_url?: boolean
     video_url?: boolean
     document_url?: boolean
-    file?: boolean
     metadata?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type data_entryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "project_id" | "date" | "location" | "description" | "image_url" | "video_url" | "document_url" | "file" | "metadata" | "createdAt" | "updatedAt", ExtArgs["result"]["data_entry"]>
+  export type data_entryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "project_id" | "date" | "location" | "description" | "image_url" | "video_url" | "document_url" | "metadata" | "createdAt" | "updatedAt", ExtArgs["result"]["data_entry"]>
   export type data_entryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     project?: boolean | projectDefaultArgs<ExtArgs>
   }
@@ -4581,7 +4572,6 @@ export namespace Prisma {
       image_url: string | null
       video_url: string | null
       document_url: string | null
-      file: string | null
       metadata: Prisma.JsonValue | null
       createdAt: Date
       updatedAt: Date
@@ -4963,7 +4953,6 @@ export namespace Prisma {
     readonly image_url: FieldRef<"data_entry", 'String'>
     readonly video_url: FieldRef<"data_entry", 'String'>
     readonly document_url: FieldRef<"data_entry", 'String'>
-    readonly file: FieldRef<"data_entry", 'String'>
     readonly metadata: FieldRef<"data_entry", 'Json'>
     readonly createdAt: FieldRef<"data_entry", 'DateTime'>
     readonly updatedAt: FieldRef<"data_entry", 'DateTime'>
@@ -5400,7 +5389,6 @@ export namespace Prisma {
     image_url: 'image_url',
     video_url: 'video_url',
     document_url: 'document_url',
-    file: 'file',
     metadata: 'metadata',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -5486,8 +5474,7 @@ export namespace Prisma {
     description: 'description',
     image_url: 'image_url',
     video_url: 'video_url',
-    document_url: 'document_url',
-    file: 'file'
+    document_url: 'document_url'
   };
 
   export type data_entryOrderByRelevanceFieldEnum = (typeof data_entryOrderByRelevanceFieldEnum)[keyof typeof data_entryOrderByRelevanceFieldEnum]
@@ -5830,7 +5817,6 @@ export namespace Prisma {
     image_url?: StringNullableFilter<"data_entry"> | string | null
     video_url?: StringNullableFilter<"data_entry"> | string | null
     document_url?: StringNullableFilter<"data_entry"> | string | null
-    file?: StringNullableFilter<"data_entry"> | string | null
     metadata?: JsonNullableFilter<"data_entry">
     createdAt?: DateTimeFilter<"data_entry"> | Date | string
     updatedAt?: DateTimeFilter<"data_entry"> | Date | string
@@ -5846,7 +5832,6 @@ export namespace Prisma {
     image_url?: SortOrderInput | SortOrder
     video_url?: SortOrderInput | SortOrder
     document_url?: SortOrderInput | SortOrder
-    file?: SortOrderInput | SortOrder
     metadata?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -5866,7 +5851,6 @@ export namespace Prisma {
     image_url?: StringNullableFilter<"data_entry"> | string | null
     video_url?: StringNullableFilter<"data_entry"> | string | null
     document_url?: StringNullableFilter<"data_entry"> | string | null
-    file?: StringNullableFilter<"data_entry"> | string | null
     metadata?: JsonNullableFilter<"data_entry">
     createdAt?: DateTimeFilter<"data_entry"> | Date | string
     updatedAt?: DateTimeFilter<"data_entry"> | Date | string
@@ -5882,7 +5866,6 @@ export namespace Prisma {
     image_url?: SortOrderInput | SortOrder
     video_url?: SortOrderInput | SortOrder
     document_url?: SortOrderInput | SortOrder
-    file?: SortOrderInput | SortOrder
     metadata?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -5905,7 +5888,6 @@ export namespace Prisma {
     image_url?: StringNullableWithAggregatesFilter<"data_entry"> | string | null
     video_url?: StringNullableWithAggregatesFilter<"data_entry"> | string | null
     document_url?: StringNullableWithAggregatesFilter<"data_entry"> | string | null
-    file?: StringNullableWithAggregatesFilter<"data_entry"> | string | null
     metadata?: JsonNullableWithAggregatesFilter<"data_entry">
     createdAt?: DateTimeWithAggregatesFilter<"data_entry"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"data_entry"> | Date | string
@@ -6196,7 +6178,6 @@ export namespace Prisma {
     image_url?: string | null
     video_url?: string | null
     document_url?: string | null
-    file?: string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -6212,7 +6193,6 @@ export namespace Prisma {
     image_url?: string | null
     video_url?: string | null
     document_url?: string | null
-    file?: string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -6225,7 +6205,6 @@ export namespace Prisma {
     image_url?: NullableStringFieldUpdateOperationsInput | string | null
     video_url?: NullableStringFieldUpdateOperationsInput | string | null
     document_url?: NullableStringFieldUpdateOperationsInput | string | null
-    file?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6241,7 +6220,6 @@ export namespace Prisma {
     image_url?: NullableStringFieldUpdateOperationsInput | string | null
     video_url?: NullableStringFieldUpdateOperationsInput | string | null
     document_url?: NullableStringFieldUpdateOperationsInput | string | null
-    file?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6256,7 +6234,6 @@ export namespace Prisma {
     image_url?: string | null
     video_url?: string | null
     document_url?: string | null
-    file?: string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -6269,7 +6246,6 @@ export namespace Prisma {
     image_url?: NullableStringFieldUpdateOperationsInput | string | null
     video_url?: NullableStringFieldUpdateOperationsInput | string | null
     document_url?: NullableStringFieldUpdateOperationsInput | string | null
-    file?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6284,7 +6260,6 @@ export namespace Prisma {
     image_url?: NullableStringFieldUpdateOperationsInput | string | null
     video_url?: NullableStringFieldUpdateOperationsInput | string | null
     document_url?: NullableStringFieldUpdateOperationsInput | string | null
-    file?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6694,7 +6669,6 @@ export namespace Prisma {
     image_url?: SortOrder
     video_url?: SortOrder
     document_url?: SortOrder
-    file?: SortOrder
     metadata?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -6714,7 +6688,6 @@ export namespace Prisma {
     image_url?: SortOrder
     video_url?: SortOrder
     document_url?: SortOrder
-    file?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -6728,7 +6701,6 @@ export namespace Prisma {
     image_url?: SortOrder
     video_url?: SortOrder
     document_url?: SortOrder
-    file?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -7227,7 +7199,6 @@ export namespace Prisma {
     image_url?: string | null
     video_url?: string | null
     document_url?: string | null
-    file?: string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -7241,7 +7212,6 @@ export namespace Prisma {
     image_url?: string | null
     video_url?: string | null
     document_url?: string | null
-    file?: string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -7329,7 +7299,6 @@ export namespace Prisma {
     image_url?: StringNullableFilter<"data_entry"> | string | null
     video_url?: StringNullableFilter<"data_entry"> | string | null
     document_url?: StringNullableFilter<"data_entry"> | string | null
-    file?: StringNullableFilter<"data_entry"> | string | null
     metadata?: JsonNullableFilter<"data_entry">
     createdAt?: DateTimeFilter<"data_entry"> | Date | string
     updatedAt?: DateTimeFilter<"data_entry"> | Date | string
@@ -7450,7 +7419,6 @@ export namespace Prisma {
     image_url?: string | null
     video_url?: string | null
     document_url?: string | null
-    file?: string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -7463,7 +7431,6 @@ export namespace Prisma {
     image_url?: NullableStringFieldUpdateOperationsInput | string | null
     video_url?: NullableStringFieldUpdateOperationsInput | string | null
     document_url?: NullableStringFieldUpdateOperationsInput | string | null
-    file?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7477,7 +7444,6 @@ export namespace Prisma {
     image_url?: NullableStringFieldUpdateOperationsInput | string | null
     video_url?: NullableStringFieldUpdateOperationsInput | string | null
     document_url?: NullableStringFieldUpdateOperationsInput | string | null
-    file?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7491,7 +7457,6 @@ export namespace Prisma {
     image_url?: NullableStringFieldUpdateOperationsInput | string | null
     video_url?: NullableStringFieldUpdateOperationsInput | string | null
     document_url?: NullableStringFieldUpdateOperationsInput | string | null
-    file?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

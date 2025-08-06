@@ -123,9 +123,7 @@ export async function allProjectManager(request: Request, response: Response) {
         updatedAt: true
       },
     });
-    if(allUsers.length <= 0){
-      return response.status(404).json({ message: 'No User(s) Found' });
-    }
+    
     return response.status(200).json({message: 'User(s) fetched', data: allUsers });
   } catch (error) {
     console.error(error);

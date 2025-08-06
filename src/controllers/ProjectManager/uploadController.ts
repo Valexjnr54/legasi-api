@@ -6,7 +6,7 @@ import fs from 'fs';
 const prisma = new PrismaClient();
 
 export async function imageUpload(request: Request, response: Response) {
-    const project_manager_id = request.user?.projectId;
+    const project_manager_id = request.user?.id;
 
     if (!project_manager_id) {
         return response.status(403).json({ message: 'Unauthorized User' });
@@ -44,7 +44,7 @@ export async function imageUpload(request: Request, response: Response) {
 }
 
 export async function videoUpload(request: Request, response: Response) {
-    const project_manager_id = request.user?.projectId;
+    const project_manager_id = request.user?.id;
 
     if (!project_manager_id) {
         return response.status(403).json({ message: 'Unauthorized User' });
@@ -70,7 +70,7 @@ export async function videoUpload(request: Request, response: Response) {
         if (uploadedImageUrl) {
             return response.status(200).json({
                 message: 'Image uploaded successfully',
-                image_url: uploadedImageUrl,
+                video_url: uploadedImageUrl,
             });
         } else {
             return response.status(500).json({ message: 'Failed to upload image' });
@@ -82,7 +82,7 @@ export async function videoUpload(request: Request, response: Response) {
 }
 
 export async function documentUpload(request: Request, response: Response) {
-    const project_manager_id = request.user?.projectId;
+    const project_manager_id = request.user?.id;
 
     if (!project_manager_id) {
         return response.status(403).json({ message: 'Unauthorized User' });
@@ -108,7 +108,7 @@ export async function documentUpload(request: Request, response: Response) {
         if (uploadedImageUrl) {
             return response.status(200).json({
                 message: 'Image uploaded successfully',
-                image_url: uploadedImageUrl,
+                document_url: uploadedImageUrl,
             });
         } else {
             return response.status(500).json({ message: 'Failed to upload image' });

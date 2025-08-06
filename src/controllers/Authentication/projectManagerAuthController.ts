@@ -51,7 +51,7 @@ export async function loginProjectManager(request: Request, response: Response) 
     // Generate a JWT token for the admin
         const token = jwt.sign(
           { 
-            projectId: user.id, 
+            id: user.id, 
             email: user.email,
             fullname: user.fullname,
             profile_image: user.profile_image,

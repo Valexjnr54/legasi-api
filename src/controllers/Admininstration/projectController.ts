@@ -53,8 +53,8 @@ export async function createProject(request: Request, response: Response) {
         data: {
             project_name,
             project_manager_id,
-            start_date,
-            end_date,
+            start_date: new Date(start_date),
+            end_date: new Date(end_date),
             description,
             target_entry
         },
@@ -189,9 +189,7 @@ export async function allProject(request: Request, response: Response) {
         updatedAt: true
       },
     });
-    if(allProjects.length <= 0){
-      return response.status(404).json({ message: 'No Project(s) Found' });
-    }
+    
     return response.status(200).json({message: 'Project(s) fetched', data: allProjects });
   } catch (error) {
     console.error(error);
