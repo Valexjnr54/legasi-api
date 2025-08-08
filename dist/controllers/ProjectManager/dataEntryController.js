@@ -221,7 +221,7 @@ async function singleDataEntry(request, response) {
     }
 }
 async function deleteDataEntry(request, response) {
-    const id = parseInt(request.query.project_id, 10);
+    const id = parseInt(request.query.data_entry_id, 10);
     const project_manager_id = request.user.id;
     // Check if user_id is not present or undefined
     if (!project_manager_id) {

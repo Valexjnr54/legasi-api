@@ -15,3 +15,5 @@ exports.projectAuthRouter.post('/logout', authenticationMiddleware_1.authenticat
 exports.projectAuthRouter.post('/email-verification', authenticationMiddleware_1.authenticateJWT, projectManagerAuthController_1.verifyProjectEmail);
 exports.projectAuthRouter.post('/change-password', authenticationMiddleware_1.authenticateJWT, projectManagerAuthController_1.changeProjectManagerPassword);
 exports.projectAuthRouter.post('/change-temp-password', authenticationMiddleware_1.authenticateJWT, projectManagerAuthController_1.changeProjectManagerTemporalPassword);
+exports.projectAuthRouter.get('/profile', authenticationMiddleware_1.authenticateJWT, projectManagerAuthController_1.profile);
+exports.projectAuthRouter.put('/update-profile', authenticationMiddleware_1.authenticateJWT, projectManagerAuthController_1.update_profile);

@@ -178,6 +178,7 @@ async function singleProjectManager(request, response) {
                 phone_number: true,
                 role: true,
                 profile_image: true,
+                project: true,
                 createdAt: true,
                 updatedAt: true
             },
@@ -225,7 +226,7 @@ async function deleteProjectManager(request, response) {
         if (!deleteUser) {
             return response.status(403).json({ message: 'Unable to delete User' });
         }
-        return response.status(201).json({ message: 'User was deleted successfully' });
+        return response.status(200).json({ message: 'Project Manager was deleted successfully', data: deleteUser });
     }
     catch (error) {
         console.error(error);

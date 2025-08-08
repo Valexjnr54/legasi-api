@@ -116,8 +116,8 @@ async function updateProject(request, response) {
             data: {
                 project_name,
                 project_manager_id,
-                start_date,
-                end_date,
+                start_date: new Date(start_date),
+                end_date: new Date(end_date),
                 description,
                 target_entry
             },
@@ -245,7 +245,7 @@ async function deleteProject(request, response) {
         if (!deleteProject) {
             return response.status(403).json({ message: 'Unable to delete Project' });
         }
-        return response.status(204).json({ message: 'Project was deleted successfully' });
+        return response.status(200).json({ message: 'Project was deleted successfully', data: deleteProject });
     }
     catch (error) {
         console.error(error);

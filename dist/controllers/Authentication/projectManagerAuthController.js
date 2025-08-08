@@ -41,6 +41,8 @@ exports.logoutProjectManager = logoutProjectManager;
 exports.verifyProjectEmail = verifyProjectEmail;
 exports.changeProjectManagerTemporalPassword = changeProjectManagerTemporalPassword;
 exports.changeProjectManagerPassword = changeProjectManagerPassword;
+exports.profile = profile;
+exports.update_profile = update_profile;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const models_1 = require("../../models");
 const config_1 = require("../../config/config");
@@ -120,10 +122,10 @@ async function logoutProjectManager(request, response) {
 }
 async function verifyProjectEmail(request, response) {
     // Validate request inputs
-    const project_id = request.user.projectId;
+    const project_manager_id = request.user.id;
     await (0, express_validator_1.body)('verificationCode').notEmpty().withMessage('Verification code is required').run(request);
     // Check if user_id is not present or undefined
-    if (!project_id) {
+    if (!project_manager_id) {
         return response.status(403).json({ message: 'Unauthorized User' });
     }
     const errors = (0, express_validator_1.validationResult)(request);
@@ -131,7 +133,7 @@ async function verifyProjectEmail(request, response) {
         return response.status(422).json({ status: "fail", errors: errors.array() });
     }
     // Retrieve the user by user_id
-    const project_manager = await prisma.project_manager.findUnique({ where: { id: project_id } });
+    const project_manager = await prisma.project_manager.findUnique({ where: { id: project_manager_id } });
     const role = project_manager?.role;
     const email = project_manager?.email;
     if (role !== 'project_manager') {
@@ -155,7 +157,7 @@ async function verifyProjectEmail(request, response) {
             return response.status(400).json({ status: "fail", message: "Invalid verification code." });
         }
         // Update the verification status
-        await prisma.project_manager.update({
+        const user = await prisma.project_manager.update({
             where: { email },
             data: {
                 email_verified: true,
@@ -163,7 +165,7 @@ async function verifyProjectEmail(request, response) {
                 status: "Active"
             },
         });
-        return response.status(200).json({ status: "success", message: "Email verified successfully." });
+        return response.status(200).json({ status: "success", message: "Email verified successfully.", user });
     }
     catch (error) {
         console.error("Email Verification Error:", error);
@@ -171,10 +173,11 @@ async function verifyProjectEmail(request, response) {
     }
 }
 async function changeProjectManagerTemporalPassword(request, response) {
-    const project_id = request.user?.projectId;
-    if (!project_id) {
+    const project_manager_id = request.user.id;
+    if (!project_manager_id) {
         return response.status(403).json({ message: 'Unauthorized User' });
     }
+    console.log(request.body);
     await (0, express_validator_1.body)('newPassword')
         .isLength({ min: 8 }).withMessage('New password must be at least 8 characters')
         .matches(/[A-Z]/).withMessage('New password must contain at least one uppercase letter')
@@ -195,7 +198,7 @@ async function changeProjectManagerTemporalPassword(request, response) {
     }
     try {
         const user = await prisma.project_manager.findUnique({
-            where: { id: project_id },
+            where: { id: project_manager_id },
         });
         if (!user) {
             return response.status(404).json({ status: "fail", message: "User not found." });
@@ -204,14 +207,14 @@ async function changeProjectManagerTemporalPassword(request, response) {
             return response.status(403).json({ message: 'Unauthorized User' });
         }
         const hashedPassword = await argon2.hash(request.body.newPassword);
-        await prisma.project_manager.update({
-            where: { id: project_id },
+        const project_manager = await prisma.project_manager.update({
+            where: { id: project_manager_id },
             data: {
                 password: hashedPassword,
                 temporal_password: false
             },
         });
-        return response.status(200).json({ status: "success", message: "Password updated successfully." });
+        return response.status(200).json({ status: "success", message: "Password updated successfully.", user: project_manager });
     }
     catch (error) {
         console.error("Change Password Error:", error);
@@ -219,8 +222,8 @@ async function changeProjectManagerTemporalPassword(request, response) {
     }
 }
 async function changeProjectManagerPassword(request, response) {
-    const project_id = request.user.projectId;
-    if (!project_id) {
+    const project_manager_id = request.user.id;
+    if (!project_manager_id) {
         return response.status(403).json({ message: 'Unauthorized User' });
     }
     // Validate input fields
@@ -246,12 +249,12 @@ async function changeProjectManagerPassword(request, response) {
     if (errors.length > 0) {
         return response.status(422).json({ status: "fail", errors });
     }
-    if (!project_id) {
+    if (!project_manager_id) {
         // throw new Error("Missing project manager ID");
-        return response.status(400).json({ message: 'Missing project manager ID', data: project_id });
+        return response.status(400).json({ message: 'Missing project manager ID', data: project_manager_id });
     }
     // Retrieve the user by user_id
-    const project_manager = await prisma.project_manager.findUnique({ where: { id: project_id } });
+    const project_manager = await prisma.project_manager.findUnique({ where: { id: project_manager_id } });
     const role = project_manager?.role;
     if (role !== 'project_manager') {
         return response.status(403).json({ message: 'Unauthorized User' });
@@ -276,7 +279,90 @@ async function changeProjectManagerPassword(request, response) {
                 password: hashedPassword,
             },
         });
-        return response.status(200).json({ status: "success", message: "Password updated successfully." });
+        return response.status(200).json({ success: true, status: "success", message: "Password updated successfully." });
+    }
+    catch (error) {
+        console.error("Change Password Error:", error);
+        return response.status(500).json({ status: "error", message: "Something went wrong." });
+    }
+}
+async function profile(request, response) {
+    const project_manager_id = request.user.id;
+    if (!project_manager_id) {
+        return response.status(403).json({ message: 'Unauthorized User' });
+    }
+    if (!project_manager_id) {
+        // throw new Error("Missing project manager ID");
+        return response.status(400).json({ message: 'Missing project manager ID', data: project_manager_id });
+    }
+    // Retrieve the user by user_id
+    const project_manager = await prisma.project_manager.findUnique({ where: { id: project_manager_id } });
+    const role = project_manager?.role;
+    if (role !== 'project_manager') {
+        return response.status(403).json({ message: 'Unauthorized User' });
+    }
+    try {
+        const user = await prisma.project_manager.findUnique({
+            where: { id: project_manager_id },
+        });
+        if (!user) {
+            return response.status(404).json({ status: "fail", message: "User not found." });
+        }
+        return response.status(200).json({ status: "success", message: "User Profile fetched successfully.", data: user });
+    }
+    catch (error) {
+        console.error("Change Password Error:", error);
+        return response.status(500).json({ status: "error", message: "Something went wrong." });
+    }
+}
+async function update_profile(request, response) {
+    const project_manager_id = request.user.id;
+    if (!project_manager_id) {
+        return response.status(403).json({ message: 'Unauthorized User' });
+    }
+    // Validate input fields
+    await (0, express_validator_1.body)('fullname')
+        .notEmpty().withMessage('Fullname is required')
+        .run(request);
+    await (0, express_validator_1.body)('email')
+        .notEmpty().isEmail().withMessage('New password must be at least 8 characters')
+        .run(request);
+    await (0, express_validator_1.body)('phone_number')
+        .notEmpty().withMessage('Phone number is required')
+        .run(request);
+    const result = (0, express_validator_1.validationResult)(request);
+    const errors = result.array();
+    if (errors.length > 0) {
+        return response.status(422).json({ status: "fail", errors });
+    }
+    if (!project_manager_id) {
+        // throw new Error("Missing project manager ID");
+        return response.status(400).json({ message: 'Missing project manager ID', data: project_manager_id });
+    }
+    // Retrieve the user by user_id
+    const project_manager = await prisma.project_manager.findUnique({ where: { id: project_manager_id } });
+    const role = project_manager?.role;
+    if (role !== 'project_manager') {
+        return response.status(403).json({ message: 'Unauthorized User' });
+    }
+    const userId = request.user?.id;
+    try {
+        const user = await prisma.project_manager.findUnique({
+            where: { id: userId },
+        });
+        if (!user) {
+            return response.status(404).json({ status: "fail", message: "User not found." });
+        }
+        const { fullname, email, phone_number } = request.body;
+        const updated_user = await prisma.project_manager.update({
+            where: { id: userId },
+            data: {
+                fullname,
+                email,
+                phone_number
+            },
+        });
+        return response.status(200).json({ status: "success", message: "Profile updated successfully.", data: updated_user });
     }
     catch (error) {
         console.error("Change Password Error:", error);
