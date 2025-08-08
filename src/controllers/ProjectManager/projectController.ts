@@ -81,9 +81,10 @@ export async function singleProject(request: Request, response: Response) {
         description:true,
         target_entry:true,
         project_manager:true,
+        data_entry: true,
         createdAt: true,
         updatedAt: true
-      },
+      }
     });
     if (!singleProject) {
       return response.status(404).json({ message: 'No Project Found' });

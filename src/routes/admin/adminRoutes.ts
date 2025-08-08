@@ -4,6 +4,8 @@ import { upload } from '../../middlewares/multerMiddleware';
 import { authenticateJWT } from '../../middlewares/authMiddleware/authenticationMiddleware';
 import { allProjectManager, createProjectManager, deleteProjectManager, singleProjectManager } from '../../controllers/Admininstration/projectManagerController';
 import { allProject, createProject, deleteProject, singleProject, updateProject } from '../../controllers/Admininstration/projectController';
+import { allDataEntry, deleteDataEntry, singleDataEntry } from '../../controllers/Admininstration/dataEntryController';
+import { dashboard } from '../../controllers/Admininstration/dashboardController';
 
 export const adminRouter = express.Router();
 
@@ -17,3 +19,9 @@ adminRouter.get('/projects', authenticateJWT, allProject);
 adminRouter.get('/project', authenticateJWT, singleProject);
 adminRouter.put('/update-project', authenticateJWT, updateProject);
 adminRouter.delete('/delete-project', authenticateJWT, deleteProject);
+
+adminRouter.get('/datas', authenticateJWT, allDataEntry);
+adminRouter.get('/data', authenticateJWT, singleDataEntry);
+adminRouter.delete('/delete-data', authenticateJWT, deleteDataEntry);
+
+adminRouter.get('/dashboard',authenticateJWT, dashboard)

@@ -35,7 +35,7 @@ export async function initializePayment(package_name:string, phone_number:string
         },
       }
     );
-    return response.data.data;
+    // return response.data.data;
   } catch (error) {
     console.error(error);
     return response.status(500).json({ message: 'Internal Server Error' });
@@ -53,7 +53,7 @@ export async function verifyPayment(reference: string) {
         },
       }
     );
-    return response.data.data;
+    // return response.data.data;
   } catch (error) {
     console.error(error);
     return response.status(500).json({ message: 'Internal Server Error' });

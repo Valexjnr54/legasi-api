@@ -166,6 +166,7 @@ export async function singleProjectManager(request: Request, response: Response)
             phone_number:true,
             role:true,
             profile_image:true,
+            project: true,
             createdAt: true,
             updatedAt: true
         },
@@ -220,7 +221,7 @@ export async function deleteProjectManager (request: Request, response: Response
         if (!deleteUser) {
           return response.status(403).json({ message: 'Unable to delete User' });
         }
-        return response.status(201).json({ message: 'User was deleted successfully' });
+        return response.status(200).json({ message: 'Project Manager was deleted successfully', data: deleteUser });
       } catch (error) {
         console.error(error);
         return response.status(500).json({ message: 'Internal Server Error' });
