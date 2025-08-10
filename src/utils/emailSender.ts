@@ -21,7 +21,7 @@ export async function sendWelcomeEmail(email: string, subject: string, user:obje
 //   const template = await ejs.renderFile(templatePath, { fullname, email: email });
 
   const mailOptions = {
-    from: 'no-reply@coalcitysmarthome.com',
+    from: 'no-reply@legasi.org',
     to: email,
     subject: subject,
     html: ejs.render(template, { user, email, temp_password }),

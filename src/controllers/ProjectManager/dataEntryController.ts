@@ -169,6 +169,11 @@ export async function allDataEntry(request: Request, response: Response) {
     }
 
     const allDatas = await prisma.data_entry.findMany({
+      where: {
+        project: {
+          project_manager_id: project_manager_id // replace with the actual project manager ID you want to filter by
+        }
+      },
       select:{
             id:true,
             project_id:true,
@@ -215,7 +220,10 @@ export async function singleDataEntry(request: Request, response: Response) {
 
     const singleData = await prisma.data_entry.findUnique({
       where: {
-        id: id
+        id: id,
+        project: {
+          project_manager_id: project_manager_id // replace with the actual project manager ID you want to filter by
+        }
       },
       select:{
             id:true,

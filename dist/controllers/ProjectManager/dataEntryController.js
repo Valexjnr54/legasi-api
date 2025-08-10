@@ -151,6 +151,11 @@ async function allDataEntry(request, response) {
             return response.status(403).json({ message: 'Unauthorized User' });
         }
         const allDatas = await prisma.data_entry.findMany({
+            where: {
+                project: {
+                    project_manager_id: project_manager_id // replace with the actual project manager ID you want to filter by
+                }
+            },
             select: {
                 id: true,
                 project_id: true,
@@ -193,7 +198,10 @@ async function singleDataEntry(request, response) {
         }
         const singleData = await prisma.data_entry.findUnique({
             where: {
-                id: id
+                id: id,
+                project: {
+                    project_manager_id: project_manager_id // replace with the actual project manager ID you want to filter by
+                }
             },
             select: {
                 id: true,

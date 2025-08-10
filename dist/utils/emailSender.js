@@ -29,7 +29,7 @@ async function sendWelcomeEmail(email, subject, user, temp_password) {
     const template = fs_1.default.readFileSync(templatePath, 'utf-8');
     //   const template = await ejs.renderFile(templatePath, { fullname, email: email });
     const mailOptions = {
-        from: 'no-reply@coalcitysmarthome.com',
+        from: 'no-reply@legasi.org',
         to: email,
         subject: subject,
         html: ejs_1.default.render(template, { user, email, temp_password }),
