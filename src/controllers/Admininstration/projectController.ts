@@ -3,11 +3,12 @@ import { PrismaClient } from '../../models';
 import { Config } from '../../config/config';
 import { body, validationResult } from 'express-validator';
 import fs from 'fs';
+import { sendAssignTaskEmail } from '../../utils/emailSender';
 
 const prisma = new PrismaClient();
 
 export async function createProject(request: Request, response: Response) {
-  const { project_name, project_manager_id, start_date, end_date, description, target_entry } = request.body;
+  const { project_name, project_manager_id, start_date, end_date, description, target_entry, task } = request.body;
   const admin_id = request.user.adminId;
 
   // Check if user_id is not present or undefined
@@ -38,7 +39,7 @@ export async function createProject(request: Request, response: Response) {
             }
             return true;
         }),
-        body('target_entry').notEmpty().withMessage('Target entry is required').isInt({ min: 1 }).withMessage('Target entry must be a positive integer')
+        body('target_entry').notEmpty().withMessage('Target entry is required')
     ];
   
     // Apply validation rules to the request
@@ -49,6 +50,11 @@ export async function createProject(request: Request, response: Response) {
     return response.status(400).json({ errors: errors.array() });
     }
 
+    const project_manager = await prisma.project_manager.findUnique({ where: {id: project_manager_id} })
+    if (!project_manager) {
+      return response.status(403).json({ message: 'Project Manager not Found' });
+    }
+
     const addProject = await prisma.project.create({
         data: {
             project_name,
@@ -56,7 +62,8 @@ export async function createProject(request: Request, response: Response) {
             start_date: new Date(start_date),
             end_date: new Date(end_date),
             description,
-            target_entry
+            target_entry,
+            task
         },
         select:{
             id:true,
@@ -66,14 +73,21 @@ export async function createProject(request: Request, response: Response) {
             end_date:true,
             description:true,
             target_entry:true,
+            task: true,
             project_manager:true,
             createdAt: true,
             updatedAt: true
         }
-    })
+    });
+
+    await sendAssignTaskEmail(project_manager.email, 'New Task Assigned! 🚀', project_manager, addProject);
+
     return response.status(200).json({ message: 'Project has been created', data: addProject });
-  } catch (error) {
-    return response.status(500).json({ message: error})
+  }  catch (error: any) {
+    console.error('Project creation error:', error);
+    return response.status(500).json({
+      message: error.message || 'Internal server error',
+    });
   }
 }
 

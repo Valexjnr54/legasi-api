@@ -7,6 +7,7 @@ exports.uploadImage = uploadImage;
 exports.uploadVideo = uploadVideo;
 exports.uploadFile = uploadFile;
 const cloudinaryConfig_1 = __importDefault(require("../config/cloudinaryConfig"));
+const path_1 = __importDefault(require("path"));
 // Function to upload an image to a specific folder and get the URL
 async function uploadImage(ImagePath, FolderPath) {
     try {
@@ -36,14 +37,22 @@ async function uploadVideo(videoPath, folderPath) {
 // Function to upload a file (non-image/video) to a specific folder and get the URL
 async function uploadFile(filePath, folderPath) {
     try {
+        const normalizedFolder = folderPath.replace(/^\/|\/$/g, '');
+        const publicId = path_1.default.basename(filePath, path_1.default.extname(filePath));
         const result = await cloudinaryConfig_1.default.uploader.upload(filePath, {
-            resource_type: 'raw', // for non-media files
-            folder: folderPath,
+            resource_type: 'raw',
+            folder: normalizedFolder,
+            public_id: publicId,
+            type: 'upload',
+            access_mode: "public"
         });
-        const fileUrl = result.secure_url;
-        return fileUrl;
+        if (!result)
+            throw new Error("Upload failed: No response from Cloudinary");
+        console.log("Uploaded URL:", result.secure_url);
+        return result.secure_url;
     }
     catch (error) {
         console.error("Error uploading file:", error);
+        throw error; // Re-throw to handle in calling function
     }
 }

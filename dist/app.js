@@ -13,6 +13,7 @@ const adminAuthRoute_1 = require("./routes/auth/adminAuthRoute");
 const adminRoutes_1 = require("./routes/admin/adminRoutes");
 const projectAuthRoute_1 = require("./routes/auth/projectAuthRoute");
 const project_managerRoutes_1 = require("./routes/project_manager/project_managerRoutes");
+const miscRoutes_1 = require("./routes/miscRoutes");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 // app.use(bodyParser.urlencoded({ extended: false }));
@@ -48,6 +49,7 @@ app.use(`${route}/auth`, adminAuthRoute_1.adminAuthRouter);
 app.use(`${route}/auth/project-manager`, projectAuthRoute_1.projectAuthRouter);
 app.use(`${route}/admin`, adminRoutes_1.adminRouter);
 app.use(`${route}/project-manager`, project_managerRoutes_1.projectRouter);
+app.use(`${route}`, miscRoutes_1.miscRouter);
 // Add this after all your routes but before the 404 handler
 app.use((err, req, res, next) => {
     if (err instanceof SyntaxError && 'body' in err) {

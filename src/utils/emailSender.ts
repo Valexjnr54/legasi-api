@@ -5,11 +5,11 @@ import path from 'path';
 import fs from "fs";
 
 const transporter = nodemailer.createTransport({
-  host: process.env.MAIL_HOST || "smtp.gmail.com",
+  host: process.env.MAIL_HOST || "mail.legasi.org",
   port: 465,
   auth: {
-    user: process.env.MAIL_USER || "qmarthub@gmail.com",
-    pass: process.env.MAIL_PASSWORD || "fukpospayyoomzlv"
+    user: process.env.MAIL_USER || "support@legasi.org",
+    pass: process.env.MAIL_PASSWORD || "#Kj6mv%!mo"
   }
 });
 
@@ -35,80 +35,46 @@ export async function sendWelcomeEmail(email: string, subject: string, user:obje
   }
 }
 
-export async function sendDeliveryRequest(email: string, rider:object, deliveryDetail: object) {
-  // Load the email template
-  const templatePath = path.join(__dirname, '../templates/email-templates/delivery.ejs');
-  // Read the EJS template from the file
-  const template = fs.readFileSync(templatePath, 'utf-8');
-
-  const mailOptions = {
-    from: 'info@riderapp.com',
-    to: email,
-    subject: 'Welcome to Riders App',
-    html: ejs.render(template, { deliveryDetail:deliveryDetail, rider:rider, email:email }),
-  };
-
+export async function sendAssignTaskEmail(email: string, subject: string, user: object, project: object) {
   try {
+    // Load the email template
+    const templatePath = path.resolve(process.cwd(), 'src/templates/email-templates/assign_task.ejs');
+
+    // Read the EJS template from the file
+    const template = fs.readFileSync(templatePath, 'utf-8');
+
+    const mailOptions = {
+      from: 'no-reply@legasi.org',
+      to: email,
+      subject,
+      html: ejs.render(template, { project, user, email }),
+    };
+
     await transporter.sendMail(mailOptions);
-    console.log('Email sent successfully.');
-  } catch (error) {
-    console.error('Error sending email:', error);
+    console.log('✅ Email sent successfully to', email);
+  } catch (err: any) {
+    console.error('❌ Error sending email:', err);
+
+    // Wrap the error so the controller sees a clean message
+    const error = new Error(
+      err.message || err.response || 'Failed to send assignment email'
+    );
+    throw error;
   }
 }
 
-export async function sendProposal(email: string, proposal: object) {
+
+export async function sendSubmitTaskEmail(email: string, subject:string, user: object, data:object) {
   // Load the email template
-  const templatePath = path.join(__dirname, '../templates/email-templates/proposal.ejs');
+  const templatePath = path.join(__dirname, '../templates/email-templates/submit_task.ejs');
   // Read the EJS template from the file
   const template = fs.readFileSync(templatePath, 'utf-8');
 
   const mailOptions = {
-    from: 'info@riderapp.com',
+    from: 'no-reply@legasi.org',
     to: email,
-    subject: 'Welcome to Riders App',
-    html: ejs.render(template, { proposal:proposal, email:email }),
-  };
-
-  try {
-    await transporter.sendMail(mailOptions);
-    console.log('Email sent successfully.');
-  } catch (error) {
-    console.error('Error sending email:', error);
-  }
-}
-
-export async function sendApproval(email: string, deliveryDetail: object) {
-  // Load the email template
-  const templatePath = path.join(__dirname, '../templates/email-templates/approve.ejs');
-  // Read the EJS template from the file
-  const template = fs.readFileSync(templatePath, 'utf-8');
-
-  const mailOptions = {
-    from: 'info@riderapp.com',
-    to: email,
-    subject: 'Welcome to Riders App',
-    html: ejs.render(template, { deliveryDetail:deliveryDetail, email:email }),
-  };
-
-  try {
-    await transporter.sendMail(mailOptions);
-    console.log('Email sent successfully.');
-  } catch (error) {
-    console.error('Error sending email:', error);
-  }
-}
-
-export async function sendReject(email: string, deliveryDetail: object) {
-  // Load the email template
-  const templatePath = path.join(__dirname, '../templates/email-templates/reject.ejs');
-  // Read the EJS template from the file
-  const template = fs.readFileSync(templatePath, 'utf-8');
-
-  const mailOptions = {
-    from: 'info@riderapp.com',
-    to: email,
-    subject: 'Welcome to Riders App',
-    html: ejs.render(template, { deliveryDetail:deliveryDetail, email:email }),
+    subject,
+    html: ejs.render(template, { user, email, data }),
   };
 
   try {

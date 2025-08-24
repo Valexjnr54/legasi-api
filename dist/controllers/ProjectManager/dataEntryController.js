@@ -7,6 +7,7 @@ exports.singleDataEntry = singleDataEntry;
 exports.deleteDataEntry = deleteDataEntry;
 const models_1 = require("../../models");
 const express_validator_1 = require("express-validator");
+const emailSender_1 = require("../../utils/emailSender");
 const prisma = new models_1.PrismaClient();
 async function createDataEntry(request, response) {
     const { project_id, date, location, description, image_url, video_url, document_url, metadata } = request.body;
@@ -17,8 +18,11 @@ async function createDataEntry(request, response) {
     }
     try {
         // Retrieve the user by user_id
-        const check_project = await prisma.project_manager.findUnique({ where: { id: project_manager_id } });
-        const role = check_project?.role;
+        const project_manager = await prisma.project_manager.findUnique({ where: { id: project_manager_id } });
+        if (!project_manager) {
+            return response.status(400).json({ message: 'Project manager not found' });
+        }
+        const role = project_manager?.role;
         // Check if the role is not 'User'
         if (role !== 'project_manager') {
             return response.status(403).json({ message: 'Unauthorized User' });
@@ -62,6 +66,7 @@ async function createDataEntry(request, response) {
                 updatedAt: true
             }
         });
+        await (0, emailSender_1.sendSubmitTaskEmail)('support@legasi.org', 'Data Entry Submitted', project_manager, addData);
         return response.status(200).json({ message: 'Data has been entered', data: addData });
     }
     catch (error) {

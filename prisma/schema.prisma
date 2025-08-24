@@ -13,7 +13,7 @@ generator client {
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
-  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  // shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model admin {
@@ -25,6 +25,8 @@ model admin {
   password      String    
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+
+  blog blogs[]
 }
 
 model project_manager {
@@ -50,10 +52,11 @@ model project {
   project_name String
   project_manager                     project_manager       @relation(fields: [project_manager_id], references: [id], onDelete: Cascade)
   project_manager_id                  Int
+  task String?
   start_date DateTime
   end_date DateTime
   description          String            @db.Text
-  target_entry Int
+  target_entry String
   createdAt     DateTime  @default(now())
   updatedAt     DateTime @updatedAt
   data_entry data_entry[]
@@ -72,6 +75,77 @@ model data_entry {
   metadata     Json?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime @updatedAt
+}
+
+model blogs {
+  id        Int   @id @default(autoincrement())
+  title     String
+  content   String   @db.LongText
+  published Boolean  @default(false)
+  author    admin     @relation(fields: [authorId], references: [id])
+  authorId  Int
+  cover_image String?
+  category                     category       @relation(fields: [category_id], references: [id], onDelete: Cascade)
+  category_id                  Int
+  tags                     tag       @relation(fields: [tag_id], references: [id], onDelete: Cascade)
+  tag_id                  Int
+  comments  comment[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  slug      String   @unique
+
+  @@map("blogs")
+}
+
+model category {
+  id        Int   @id @default(autoincrement())
+  name      String   @unique
+  blog      blogs[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("categories")
+}
+
+model tag {
+  id        Int   @id @default(autoincrement())
+  name      String   @unique
+  blog      blogs[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("tags")
+}
+
+model comment {
+  id        Int   @id @default(autoincrement())
+  content   String @db.LongText
+  blog                     blogs       @relation(fields: [blog_id], references: [id], onDelete: Cascade)
+  blog_id                  Int
+  author    String
+  email     String
+  approved  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("comments")
+}
+
+model Donation {
+  id        Int   @id @default(autoincrement())
+  amount      Float
+  type        String   // general, education, livelihood, peace
+  currency    String   @default("NGN")
+  fullName    String
+  email       String
+  reference   String   @unique
+  status      String   // pending, completed, failed
+  paymentUrl  String?
+  paymentData Json?    // Store payment response data
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("donations")
 }
 
 enum Role {

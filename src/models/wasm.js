@@ -152,6 +152,7 @@ exports.Prisma.ProjectScalarFieldEnum = {
   id: 'id',
   project_name: 'project_name',
   project_manager_id: 'project_manager_id',
+  task: 'task',
   start_date: 'start_date',
   end_date: 'end_date',
   description: 'description',
@@ -170,6 +171,60 @@ exports.Prisma.Data_entryScalarFieldEnum = {
   video_url: 'video_url',
   document_url: 'document_url',
   metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.BlogsScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  content: 'content',
+  published: 'published',
+  authorId: 'authorId',
+  cover_image: 'cover_image',
+  category_id: 'category_id',
+  tag_id: 'tag_id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  slug: 'slug'
+};
+
+exports.Prisma.CategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.TagScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CommentScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  blog_id: 'blog_id',
+  author: 'author',
+  email: 'email',
+  approved: 'approved',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.DonationScalarFieldEnum = {
+  id: 'id',
+  amount: 'amount',
+  type: 'type',
+  currency: 'currency',
+  fullName: 'fullName',
+  email: 'email',
+  reference: 'reference',
+  status: 'status',
+  paymentUrl: 'paymentUrl',
+  paymentData: 'paymentData',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -208,7 +263,9 @@ exports.Prisma.project_managerOrderByRelevanceFieldEnum = {
 
 exports.Prisma.projectOrderByRelevanceFieldEnum = {
   project_name: 'project_name',
-  description: 'description'
+  task: 'task',
+  description: 'description',
+  target_entry: 'target_entry'
 };
 
 exports.Prisma.JsonNullValueFilter = {
@@ -228,6 +285,37 @@ exports.Prisma.data_entryOrderByRelevanceFieldEnum = {
   image_url: 'image_url',
   video_url: 'video_url',
   document_url: 'document_url'
+};
+
+exports.Prisma.blogsOrderByRelevanceFieldEnum = {
+  title: 'title',
+  content: 'content',
+  cover_image: 'cover_image',
+  slug: 'slug'
+};
+
+exports.Prisma.categoryOrderByRelevanceFieldEnum = {
+  name: 'name'
+};
+
+exports.Prisma.tagOrderByRelevanceFieldEnum = {
+  name: 'name'
+};
+
+exports.Prisma.commentOrderByRelevanceFieldEnum = {
+  content: 'content',
+  author: 'author',
+  email: 'email'
+};
+
+exports.Prisma.DonationOrderByRelevanceFieldEnum = {
+  type: 'type',
+  currency: 'currency',
+  fullName: 'fullName',
+  email: 'email',
+  reference: 'reference',
+  status: 'status',
+  paymentUrl: 'paymentUrl'
 };
 exports.Role = exports.$Enums.Role = {
   project_manager: 'project_manager',
@@ -249,7 +337,12 @@ exports.Prisma.ModelName = {
   admin: 'admin',
   project_manager: 'project_manager',
   project: 'project',
-  data_entry: 'data_entry'
+  data_entry: 'data_entry',
+  blogs: 'blogs',
+  category: 'category',
+  tag: 'tag',
+  comment: 'comment',
+  Donation: 'Donation'
 };
 
 /**
