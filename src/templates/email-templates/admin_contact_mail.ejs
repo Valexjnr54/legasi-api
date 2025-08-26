@@ -322,23 +322,24 @@
                                                         <table cellpadding="0" cellspacing="0" width="100%" bgcolor="#fafafa" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:separate;border-spacing:0px;background-color:#fafafa;border-radius:10px" role="presentation">
                                                             <tr>
                                                                 <td align="left" style="padding:20px;Margin:0">
-                                                                    <h3 style="Margin:0;line-height:34px;mso-line-height-rule:exactly;font-family:Imprima, Arial, sans-serif;font-size:28px;font-style:normal;font-weight:bold;color:#2D3142">Welcome,&nbsp; <%= user.fullname%></h3>
+                                                                    <h3 style="Margin:0;line-height:34px;mso-line-height-rule:exactly;font-family:Imprima, Arial, sans-serif;font-size:28px;font-style:normal;font-weight:bold;color:#2D3142">Hello,&nbsp; Admin</h3>
                                                                     <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:Imprima, Arial, sans-serif;line-height:27px;color:#2D3142;font-size:18px"><br></p>
-                                                                    <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:Imprima, Arial, sans-serif;line-height:27px;color:#2D3142;font-size:18px">You’ve been assigned a new project task<br><br>
+                                                                    <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:Imprima, Arial, sans-serif;line-height:27px;color:#2D3142;font-size:18px">A new contact ticket has just been submitted and might require your attention. Below are the detail of the ticket<br><br>
 
-                                                                        We have included details below:<br><br>
+                                                                        Here are the details:<br><br>
 
-                                                                        <strong>Project Title:</strong> <%= project.project_name%><br>
-                                                                        <strong>Project Task:</strong> <%= project.task%><br>
-                                                                        <strong>Start Date:</strong>   <%= project.start_date%>
-                                                                        <strong>End Date:</strong>     <%= project.end_date%><br><br>
+                                                                        <p><strong>Name:</strong> <%= name%></p>
+                                                                        <p><strong>Email:</strong> <%= email%></p>
+                                                                        <p><strong>Subject:</strong> <%= subject%></p>
+                                                                        <p><strong>Message:</strong></p>
+                                                                        <div style="background-color: #f8f0ff; padding: 15px; border-radius: 5px; border-left: 4px solid #880088;">
+                                                                            <%= message.replace(/\n/g, '<br>') %>
+                                                                        </div><br><br>
 
-                                                                        Please log in to your dashboard to view more details and get started.<br>
-                                                                        <br><br>
-
-                                                                        In addition to accessing our platform, we encourage you to connect with our team. Feel free to reach out to our support team at info@legasi.org for any assistance you may need.<br><br>
-    
-                                                                        We look forward to collaborating with you and witnessing your success within our community.</p>
+                                                                        <p style="margin-top: 20px; color: #666; font-size: 12px;">
+                                                                            Received on: <%=new Date().toLocaleString()%><br>
+                                                                        </p>
+                                                                        Please review the submissions and attend to it accordingly.<br>
                                                                 </td>
                                                             </tr>
                                                         </table>

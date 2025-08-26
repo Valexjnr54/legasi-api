@@ -66,7 +66,7 @@ async function createDataEntry(request, response) {
                 updatedAt: true
             }
         });
-        await (0, emailSender_1.sendSubmitTaskEmail)('support@legasi.org', 'Data Entry Submitted', project_manager, addData);
+        await (0, emailSender_1.sendSubmitTaskEmail)('info@legasi.org', 'Data Entry Submitted', project_manager, addData);
         return response.status(200).json({ message: 'Data has been entered', data: addData });
     }
     catch (error) {

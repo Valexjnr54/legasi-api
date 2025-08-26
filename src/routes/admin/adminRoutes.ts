@@ -11,6 +11,7 @@ import { allCategories, createCategory, deleteCategory, singleCategory, updateCa
 import { allBlogs, createBlog, deleteBlog, singleBlog, updateBlog } from '../../controllers/Admininstration/blogController';
 import { allDonations, donationStats, singleDonation } from '../../controllers/Admininstration/donationController';
 import { allComments, approveComment, deleteComment, getApprovedComments, getPendingComments, singleComment } from '../../controllers/Admininstration/commentController';
+import { allVolunteers, approveVolunteer, deleteVolunteer, getApprovedVolunteers, getPendingVolunteers, singleVolunteer } from '../../controllers/Admininstration/volunteerController';
 
 export const adminRouter = express.Router();
 
@@ -53,6 +54,13 @@ adminRouter.delete('/delete-comment', authenticateJWT, deleteComment);
 adminRouter.put('/approve-comment', authenticateJWT, approveComment);
 adminRouter.get('/approved-comments', authenticateJWT, getApprovedComments);
 adminRouter.get('/pending-comment', authenticateJWT, getPendingComments)
+
+adminRouter.get('/all-volunteers', authenticateJWT, allVolunteers);
+adminRouter.get('/single-volunteer', authenticateJWT, singleVolunteer);
+adminRouter.delete('/delete-volunteer', authenticateJWT, deleteVolunteer);
+adminRouter.put('/approve-volunteer', authenticateJWT, approveVolunteer);
+adminRouter.get('/approved-volunteers', authenticateJWT, getApprovedVolunteers);
+adminRouter.get('/pending-volunteer', authenticateJWT, getPendingVolunteers)
 
 adminRouter.get('/datas', authenticateJWT, allDataEntry);
 adminRouter.get('/data', authenticateJWT, singleDataEntry);

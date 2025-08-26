@@ -58,6 +58,11 @@ export type comment = $Result.DefaultSelection<Prisma.$commentPayload>
  * 
  */
 export type Donation = $Result.DefaultSelection<Prisma.$DonationPayload>
+/**
+ * Model VolunteerApplication
+ * 
+ */
+export type VolunteerApplication = $Result.DefaultSelection<Prisma.$VolunteerApplicationPayload>
 
 /**
  * Enums
@@ -308,6 +313,16 @@ export class PrismaClient<
     * ```
     */
   get donation(): Prisma.DonationDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.volunteerApplication`: Exposes CRUD operations for the **VolunteerApplication** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more VolunteerApplications
+    * const volunteerApplications = await prisma.volunteerApplication.findMany()
+    * ```
+    */
+  get volunteerApplication(): Prisma.VolunteerApplicationDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -756,7 +771,8 @@ export namespace Prisma {
     category: 'category',
     tag: 'tag',
     comment: 'comment',
-    Donation: 'Donation'
+    Donation: 'Donation',
+    VolunteerApplication: 'VolunteerApplication'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -775,7 +791,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "admin" | "project_manager" | "project" | "data_entry" | "blogs" | "category" | "tag" | "comment" | "donation"
+      modelProps: "admin" | "project_manager" | "project" | "data_entry" | "blogs" | "category" | "tag" | "comment" | "donation" | "volunteerApplication"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1373,6 +1389,72 @@ export namespace Prisma {
           }
         }
       }
+      VolunteerApplication: {
+        payload: Prisma.$VolunteerApplicationPayload<ExtArgs>
+        fields: Prisma.VolunteerApplicationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.VolunteerApplicationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VolunteerApplicationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.VolunteerApplicationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VolunteerApplicationPayload>
+          }
+          findFirst: {
+            args: Prisma.VolunteerApplicationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VolunteerApplicationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.VolunteerApplicationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VolunteerApplicationPayload>
+          }
+          findMany: {
+            args: Prisma.VolunteerApplicationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VolunteerApplicationPayload>[]
+          }
+          create: {
+            args: Prisma.VolunteerApplicationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VolunteerApplicationPayload>
+          }
+          createMany: {
+            args: Prisma.VolunteerApplicationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.VolunteerApplicationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VolunteerApplicationPayload>
+          }
+          update: {
+            args: Prisma.VolunteerApplicationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VolunteerApplicationPayload>
+          }
+          deleteMany: {
+            args: Prisma.VolunteerApplicationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.VolunteerApplicationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.VolunteerApplicationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VolunteerApplicationPayload>
+          }
+          aggregate: {
+            args: Prisma.VolunteerApplicationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateVolunteerApplication>
+          }
+          groupBy: {
+            args: Prisma.VolunteerApplicationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<VolunteerApplicationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.VolunteerApplicationCountArgs<ExtArgs>
+            result: $Utils.Optional<VolunteerApplicationCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1466,6 +1548,7 @@ export namespace Prisma {
     tag?: tagOmit
     comment?: commentOmit
     donation?: DonationOmit
+    volunteerApplication?: VolunteerApplicationOmit
   }
 
   /* Types for Logging */
@@ -10965,6 +11048,977 @@ export namespace Prisma {
 
 
   /**
+   * Model VolunteerApplication
+   */
+
+  export type AggregateVolunteerApplication = {
+    _count: VolunteerApplicationCountAggregateOutputType | null
+    _avg: VolunteerApplicationAvgAggregateOutputType | null
+    _sum: VolunteerApplicationSumAggregateOutputType | null
+    _min: VolunteerApplicationMinAggregateOutputType | null
+    _max: VolunteerApplicationMaxAggregateOutputType | null
+  }
+
+  export type VolunteerApplicationAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type VolunteerApplicationSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type VolunteerApplicationMinAggregateOutputType = {
+    id: number | null
+    firstName: string | null
+    lastName: string | null
+    email: string | null
+    phone: string | null
+    interests: string | null
+    motivation: string | null
+    approved: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type VolunteerApplicationMaxAggregateOutputType = {
+    id: number | null
+    firstName: string | null
+    lastName: string | null
+    email: string | null
+    phone: string | null
+    interests: string | null
+    motivation: string | null
+    approved: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type VolunteerApplicationCountAggregateOutputType = {
+    id: number
+    firstName: number
+    lastName: number
+    email: number
+    phone: number
+    interests: number
+    motivation: number
+    approved: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type VolunteerApplicationAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type VolunteerApplicationSumAggregateInputType = {
+    id?: true
+  }
+
+  export type VolunteerApplicationMinAggregateInputType = {
+    id?: true
+    firstName?: true
+    lastName?: true
+    email?: true
+    phone?: true
+    interests?: true
+    motivation?: true
+    approved?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type VolunteerApplicationMaxAggregateInputType = {
+    id?: true
+    firstName?: true
+    lastName?: true
+    email?: true
+    phone?: true
+    interests?: true
+    motivation?: true
+    approved?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type VolunteerApplicationCountAggregateInputType = {
+    id?: true
+    firstName?: true
+    lastName?: true
+    email?: true
+    phone?: true
+    interests?: true
+    motivation?: true
+    approved?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type VolunteerApplicationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VolunteerApplication to aggregate.
+     */
+    where?: VolunteerApplicationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VolunteerApplications to fetch.
+     */
+    orderBy?: VolunteerApplicationOrderByWithRelationInput | VolunteerApplicationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: VolunteerApplicationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VolunteerApplications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VolunteerApplications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned VolunteerApplications
+    **/
+    _count?: true | VolunteerApplicationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: VolunteerApplicationAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: VolunteerApplicationSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: VolunteerApplicationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: VolunteerApplicationMaxAggregateInputType
+  }
+
+  export type GetVolunteerApplicationAggregateType<T extends VolunteerApplicationAggregateArgs> = {
+        [P in keyof T & keyof AggregateVolunteerApplication]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateVolunteerApplication[P]>
+      : GetScalarType<T[P], AggregateVolunteerApplication[P]>
+  }
+
+
+
+
+  export type VolunteerApplicationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VolunteerApplicationWhereInput
+    orderBy?: VolunteerApplicationOrderByWithAggregationInput | VolunteerApplicationOrderByWithAggregationInput[]
+    by: VolunteerApplicationScalarFieldEnum[] | VolunteerApplicationScalarFieldEnum
+    having?: VolunteerApplicationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: VolunteerApplicationCountAggregateInputType | true
+    _avg?: VolunteerApplicationAvgAggregateInputType
+    _sum?: VolunteerApplicationSumAggregateInputType
+    _min?: VolunteerApplicationMinAggregateInputType
+    _max?: VolunteerApplicationMaxAggregateInputType
+  }
+
+  export type VolunteerApplicationGroupByOutputType = {
+    id: number
+    firstName: string
+    lastName: string
+    email: string
+    phone: string
+    interests: string
+    motivation: string
+    approved: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: VolunteerApplicationCountAggregateOutputType | null
+    _avg: VolunteerApplicationAvgAggregateOutputType | null
+    _sum: VolunteerApplicationSumAggregateOutputType | null
+    _min: VolunteerApplicationMinAggregateOutputType | null
+    _max: VolunteerApplicationMaxAggregateOutputType | null
+  }
+
+  type GetVolunteerApplicationGroupByPayload<T extends VolunteerApplicationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<VolunteerApplicationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof VolunteerApplicationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], VolunteerApplicationGroupByOutputType[P]>
+            : GetScalarType<T[P], VolunteerApplicationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type VolunteerApplicationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    firstName?: boolean
+    lastName?: boolean
+    email?: boolean
+    phone?: boolean
+    interests?: boolean
+    motivation?: boolean
+    approved?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["volunteerApplication"]>
+
+
+
+  export type VolunteerApplicationSelectScalar = {
+    id?: boolean
+    firstName?: boolean
+    lastName?: boolean
+    email?: boolean
+    phone?: boolean
+    interests?: boolean
+    motivation?: boolean
+    approved?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type VolunteerApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "phone" | "interests" | "motivation" | "approved" | "createdAt" | "updatedAt", ExtArgs["result"]["volunteerApplication"]>
+
+  export type $VolunteerApplicationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "VolunteerApplication"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      firstName: string
+      lastName: string
+      email: string
+      phone: string
+      interests: string
+      motivation: string
+      approved: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["volunteerApplication"]>
+    composites: {}
+  }
+
+  type VolunteerApplicationGetPayload<S extends boolean | null | undefined | VolunteerApplicationDefaultArgs> = $Result.GetResult<Prisma.$VolunteerApplicationPayload, S>
+
+  type VolunteerApplicationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<VolunteerApplicationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: VolunteerApplicationCountAggregateInputType | true
+    }
+
+  export interface VolunteerApplicationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['VolunteerApplication'], meta: { name: 'VolunteerApplication' } }
+    /**
+     * Find zero or one VolunteerApplication that matches the filter.
+     * @param {VolunteerApplicationFindUniqueArgs} args - Arguments to find a VolunteerApplication
+     * @example
+     * // Get one VolunteerApplication
+     * const volunteerApplication = await prisma.volunteerApplication.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends VolunteerApplicationFindUniqueArgs>(args: SelectSubset<T, VolunteerApplicationFindUniqueArgs<ExtArgs>>): Prisma__VolunteerApplicationClient<$Result.GetResult<Prisma.$VolunteerApplicationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one VolunteerApplication that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {VolunteerApplicationFindUniqueOrThrowArgs} args - Arguments to find a VolunteerApplication
+     * @example
+     * // Get one VolunteerApplication
+     * const volunteerApplication = await prisma.volunteerApplication.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends VolunteerApplicationFindUniqueOrThrowArgs>(args: SelectSubset<T, VolunteerApplicationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__VolunteerApplicationClient<$Result.GetResult<Prisma.$VolunteerApplicationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first VolunteerApplication that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VolunteerApplicationFindFirstArgs} args - Arguments to find a VolunteerApplication
+     * @example
+     * // Get one VolunteerApplication
+     * const volunteerApplication = await prisma.volunteerApplication.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends VolunteerApplicationFindFirstArgs>(args?: SelectSubset<T, VolunteerApplicationFindFirstArgs<ExtArgs>>): Prisma__VolunteerApplicationClient<$Result.GetResult<Prisma.$VolunteerApplicationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first VolunteerApplication that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VolunteerApplicationFindFirstOrThrowArgs} args - Arguments to find a VolunteerApplication
+     * @example
+     * // Get one VolunteerApplication
+     * const volunteerApplication = await prisma.volunteerApplication.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends VolunteerApplicationFindFirstOrThrowArgs>(args?: SelectSubset<T, VolunteerApplicationFindFirstOrThrowArgs<ExtArgs>>): Prisma__VolunteerApplicationClient<$Result.GetResult<Prisma.$VolunteerApplicationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more VolunteerApplications that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VolunteerApplicationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all VolunteerApplications
+     * const volunteerApplications = await prisma.volunteerApplication.findMany()
+     * 
+     * // Get first 10 VolunteerApplications
+     * const volunteerApplications = await prisma.volunteerApplication.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const volunteerApplicationWithIdOnly = await prisma.volunteerApplication.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends VolunteerApplicationFindManyArgs>(args?: SelectSubset<T, VolunteerApplicationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VolunteerApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a VolunteerApplication.
+     * @param {VolunteerApplicationCreateArgs} args - Arguments to create a VolunteerApplication.
+     * @example
+     * // Create one VolunteerApplication
+     * const VolunteerApplication = await prisma.volunteerApplication.create({
+     *   data: {
+     *     // ... data to create a VolunteerApplication
+     *   }
+     * })
+     * 
+     */
+    create<T extends VolunteerApplicationCreateArgs>(args: SelectSubset<T, VolunteerApplicationCreateArgs<ExtArgs>>): Prisma__VolunteerApplicationClient<$Result.GetResult<Prisma.$VolunteerApplicationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many VolunteerApplications.
+     * @param {VolunteerApplicationCreateManyArgs} args - Arguments to create many VolunteerApplications.
+     * @example
+     * // Create many VolunteerApplications
+     * const volunteerApplication = await prisma.volunteerApplication.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends VolunteerApplicationCreateManyArgs>(args?: SelectSubset<T, VolunteerApplicationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a VolunteerApplication.
+     * @param {VolunteerApplicationDeleteArgs} args - Arguments to delete one VolunteerApplication.
+     * @example
+     * // Delete one VolunteerApplication
+     * const VolunteerApplication = await prisma.volunteerApplication.delete({
+     *   where: {
+     *     // ... filter to delete one VolunteerApplication
+     *   }
+     * })
+     * 
+     */
+    delete<T extends VolunteerApplicationDeleteArgs>(args: SelectSubset<T, VolunteerApplicationDeleteArgs<ExtArgs>>): Prisma__VolunteerApplicationClient<$Result.GetResult<Prisma.$VolunteerApplicationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one VolunteerApplication.
+     * @param {VolunteerApplicationUpdateArgs} args - Arguments to update one VolunteerApplication.
+     * @example
+     * // Update one VolunteerApplication
+     * const volunteerApplication = await prisma.volunteerApplication.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends VolunteerApplicationUpdateArgs>(args: SelectSubset<T, VolunteerApplicationUpdateArgs<ExtArgs>>): Prisma__VolunteerApplicationClient<$Result.GetResult<Prisma.$VolunteerApplicationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more VolunteerApplications.
+     * @param {VolunteerApplicationDeleteManyArgs} args - Arguments to filter VolunteerApplications to delete.
+     * @example
+     * // Delete a few VolunteerApplications
+     * const { count } = await prisma.volunteerApplication.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends VolunteerApplicationDeleteManyArgs>(args?: SelectSubset<T, VolunteerApplicationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more VolunteerApplications.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VolunteerApplicationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many VolunteerApplications
+     * const volunteerApplication = await prisma.volunteerApplication.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends VolunteerApplicationUpdateManyArgs>(args: SelectSubset<T, VolunteerApplicationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one VolunteerApplication.
+     * @param {VolunteerApplicationUpsertArgs} args - Arguments to update or create a VolunteerApplication.
+     * @example
+     * // Update or create a VolunteerApplication
+     * const volunteerApplication = await prisma.volunteerApplication.upsert({
+     *   create: {
+     *     // ... data to create a VolunteerApplication
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the VolunteerApplication we want to update
+     *   }
+     * })
+     */
+    upsert<T extends VolunteerApplicationUpsertArgs>(args: SelectSubset<T, VolunteerApplicationUpsertArgs<ExtArgs>>): Prisma__VolunteerApplicationClient<$Result.GetResult<Prisma.$VolunteerApplicationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of VolunteerApplications.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VolunteerApplicationCountArgs} args - Arguments to filter VolunteerApplications to count.
+     * @example
+     * // Count the number of VolunteerApplications
+     * const count = await prisma.volunteerApplication.count({
+     *   where: {
+     *     // ... the filter for the VolunteerApplications we want to count
+     *   }
+     * })
+    **/
+    count<T extends VolunteerApplicationCountArgs>(
+      args?: Subset<T, VolunteerApplicationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], VolunteerApplicationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a VolunteerApplication.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VolunteerApplicationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends VolunteerApplicationAggregateArgs>(args: Subset<T, VolunteerApplicationAggregateArgs>): Prisma.PrismaPromise<GetVolunteerApplicationAggregateType<T>>
+
+    /**
+     * Group by VolunteerApplication.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VolunteerApplicationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends VolunteerApplicationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: VolunteerApplicationGroupByArgs['orderBy'] }
+        : { orderBy?: VolunteerApplicationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, VolunteerApplicationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVolunteerApplicationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the VolunteerApplication model
+   */
+  readonly fields: VolunteerApplicationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for VolunteerApplication.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__VolunteerApplicationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the VolunteerApplication model
+   */
+  interface VolunteerApplicationFieldRefs {
+    readonly id: FieldRef<"VolunteerApplication", 'Int'>
+    readonly firstName: FieldRef<"VolunteerApplication", 'String'>
+    readonly lastName: FieldRef<"VolunteerApplication", 'String'>
+    readonly email: FieldRef<"VolunteerApplication", 'String'>
+    readonly phone: FieldRef<"VolunteerApplication", 'String'>
+    readonly interests: FieldRef<"VolunteerApplication", 'String'>
+    readonly motivation: FieldRef<"VolunteerApplication", 'String'>
+    readonly approved: FieldRef<"VolunteerApplication", 'Boolean'>
+    readonly createdAt: FieldRef<"VolunteerApplication", 'DateTime'>
+    readonly updatedAt: FieldRef<"VolunteerApplication", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * VolunteerApplication findUnique
+   */
+  export type VolunteerApplicationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VolunteerApplication
+     */
+    select?: VolunteerApplicationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VolunteerApplication
+     */
+    omit?: VolunteerApplicationOmit<ExtArgs> | null
+    /**
+     * Filter, which VolunteerApplication to fetch.
+     */
+    where: VolunteerApplicationWhereUniqueInput
+  }
+
+  /**
+   * VolunteerApplication findUniqueOrThrow
+   */
+  export type VolunteerApplicationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VolunteerApplication
+     */
+    select?: VolunteerApplicationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VolunteerApplication
+     */
+    omit?: VolunteerApplicationOmit<ExtArgs> | null
+    /**
+     * Filter, which VolunteerApplication to fetch.
+     */
+    where: VolunteerApplicationWhereUniqueInput
+  }
+
+  /**
+   * VolunteerApplication findFirst
+   */
+  export type VolunteerApplicationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VolunteerApplication
+     */
+    select?: VolunteerApplicationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VolunteerApplication
+     */
+    omit?: VolunteerApplicationOmit<ExtArgs> | null
+    /**
+     * Filter, which VolunteerApplication to fetch.
+     */
+    where?: VolunteerApplicationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VolunteerApplications to fetch.
+     */
+    orderBy?: VolunteerApplicationOrderByWithRelationInput | VolunteerApplicationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VolunteerApplications.
+     */
+    cursor?: VolunteerApplicationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VolunteerApplications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VolunteerApplications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VolunteerApplications.
+     */
+    distinct?: VolunteerApplicationScalarFieldEnum | VolunteerApplicationScalarFieldEnum[]
+  }
+
+  /**
+   * VolunteerApplication findFirstOrThrow
+   */
+  export type VolunteerApplicationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VolunteerApplication
+     */
+    select?: VolunteerApplicationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VolunteerApplication
+     */
+    omit?: VolunteerApplicationOmit<ExtArgs> | null
+    /**
+     * Filter, which VolunteerApplication to fetch.
+     */
+    where?: VolunteerApplicationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VolunteerApplications to fetch.
+     */
+    orderBy?: VolunteerApplicationOrderByWithRelationInput | VolunteerApplicationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VolunteerApplications.
+     */
+    cursor?: VolunteerApplicationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VolunteerApplications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VolunteerApplications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VolunteerApplications.
+     */
+    distinct?: VolunteerApplicationScalarFieldEnum | VolunteerApplicationScalarFieldEnum[]
+  }
+
+  /**
+   * VolunteerApplication findMany
+   */
+  export type VolunteerApplicationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VolunteerApplication
+     */
+    select?: VolunteerApplicationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VolunteerApplication
+     */
+    omit?: VolunteerApplicationOmit<ExtArgs> | null
+    /**
+     * Filter, which VolunteerApplications to fetch.
+     */
+    where?: VolunteerApplicationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VolunteerApplications to fetch.
+     */
+    orderBy?: VolunteerApplicationOrderByWithRelationInput | VolunteerApplicationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing VolunteerApplications.
+     */
+    cursor?: VolunteerApplicationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VolunteerApplications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VolunteerApplications.
+     */
+    skip?: number
+    distinct?: VolunteerApplicationScalarFieldEnum | VolunteerApplicationScalarFieldEnum[]
+  }
+
+  /**
+   * VolunteerApplication create
+   */
+  export type VolunteerApplicationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VolunteerApplication
+     */
+    select?: VolunteerApplicationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VolunteerApplication
+     */
+    omit?: VolunteerApplicationOmit<ExtArgs> | null
+    /**
+     * The data needed to create a VolunteerApplication.
+     */
+    data: XOR<VolunteerApplicationCreateInput, VolunteerApplicationUncheckedCreateInput>
+  }
+
+  /**
+   * VolunteerApplication createMany
+   */
+  export type VolunteerApplicationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many VolunteerApplications.
+     */
+    data: VolunteerApplicationCreateManyInput | VolunteerApplicationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * VolunteerApplication update
+   */
+  export type VolunteerApplicationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VolunteerApplication
+     */
+    select?: VolunteerApplicationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VolunteerApplication
+     */
+    omit?: VolunteerApplicationOmit<ExtArgs> | null
+    /**
+     * The data needed to update a VolunteerApplication.
+     */
+    data: XOR<VolunteerApplicationUpdateInput, VolunteerApplicationUncheckedUpdateInput>
+    /**
+     * Choose, which VolunteerApplication to update.
+     */
+    where: VolunteerApplicationWhereUniqueInput
+  }
+
+  /**
+   * VolunteerApplication updateMany
+   */
+  export type VolunteerApplicationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update VolunteerApplications.
+     */
+    data: XOR<VolunteerApplicationUpdateManyMutationInput, VolunteerApplicationUncheckedUpdateManyInput>
+    /**
+     * Filter which VolunteerApplications to update
+     */
+    where?: VolunteerApplicationWhereInput
+    /**
+     * Limit how many VolunteerApplications to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * VolunteerApplication upsert
+   */
+  export type VolunteerApplicationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VolunteerApplication
+     */
+    select?: VolunteerApplicationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VolunteerApplication
+     */
+    omit?: VolunteerApplicationOmit<ExtArgs> | null
+    /**
+     * The filter to search for the VolunteerApplication to update in case it exists.
+     */
+    where: VolunteerApplicationWhereUniqueInput
+    /**
+     * In case the VolunteerApplication found by the `where` argument doesn't exist, create a new VolunteerApplication with this data.
+     */
+    create: XOR<VolunteerApplicationCreateInput, VolunteerApplicationUncheckedCreateInput>
+    /**
+     * In case the VolunteerApplication was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<VolunteerApplicationUpdateInput, VolunteerApplicationUncheckedUpdateInput>
+  }
+
+  /**
+   * VolunteerApplication delete
+   */
+  export type VolunteerApplicationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VolunteerApplication
+     */
+    select?: VolunteerApplicationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VolunteerApplication
+     */
+    omit?: VolunteerApplicationOmit<ExtArgs> | null
+    /**
+     * Filter which VolunteerApplication to delete.
+     */
+    where: VolunteerApplicationWhereUniqueInput
+  }
+
+  /**
+   * VolunteerApplication deleteMany
+   */
+  export type VolunteerApplicationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VolunteerApplications to delete
+     */
+    where?: VolunteerApplicationWhereInput
+    /**
+     * Limit how many VolunteerApplications to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * VolunteerApplication without action
+   */
+  export type VolunteerApplicationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VolunteerApplication
+     */
+    select?: VolunteerApplicationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VolunteerApplication
+     */
+    omit?: VolunteerApplicationOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -11114,6 +12168,22 @@ export namespace Prisma {
   export type DonationScalarFieldEnum = (typeof DonationScalarFieldEnum)[keyof typeof DonationScalarFieldEnum]
 
 
+  export const VolunteerApplicationScalarFieldEnum: {
+    id: 'id',
+    firstName: 'firstName',
+    lastName: 'lastName',
+    email: 'email',
+    phone: 'phone',
+    interests: 'interests',
+    motivation: 'motivation',
+    approved: 'approved',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type VolunteerApplicationScalarFieldEnum = (typeof VolunteerApplicationScalarFieldEnum)[keyof typeof VolunteerApplicationScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -11243,6 +12313,18 @@ export namespace Prisma {
   };
 
   export type DonationOrderByRelevanceFieldEnum = (typeof DonationOrderByRelevanceFieldEnum)[keyof typeof DonationOrderByRelevanceFieldEnum]
+
+
+  export const VolunteerApplicationOrderByRelevanceFieldEnum: {
+    firstName: 'firstName',
+    lastName: 'lastName',
+    email: 'email',
+    phone: 'phone',
+    interests: 'interests',
+    motivation: 'motivation'
+  };
+
+  export type VolunteerApplicationOrderByRelevanceFieldEnum = (typeof VolunteerApplicationOrderByRelevanceFieldEnum)[keyof typeof VolunteerApplicationOrderByRelevanceFieldEnum]
 
 
   /**
@@ -12032,6 +13114,86 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Donation"> | Date | string
   }
 
+  export type VolunteerApplicationWhereInput = {
+    AND?: VolunteerApplicationWhereInput | VolunteerApplicationWhereInput[]
+    OR?: VolunteerApplicationWhereInput[]
+    NOT?: VolunteerApplicationWhereInput | VolunteerApplicationWhereInput[]
+    id?: IntFilter<"VolunteerApplication"> | number
+    firstName?: StringFilter<"VolunteerApplication"> | string
+    lastName?: StringFilter<"VolunteerApplication"> | string
+    email?: StringFilter<"VolunteerApplication"> | string
+    phone?: StringFilter<"VolunteerApplication"> | string
+    interests?: StringFilter<"VolunteerApplication"> | string
+    motivation?: StringFilter<"VolunteerApplication"> | string
+    approved?: BoolFilter<"VolunteerApplication"> | boolean
+    createdAt?: DateTimeFilter<"VolunteerApplication"> | Date | string
+    updatedAt?: DateTimeFilter<"VolunteerApplication"> | Date | string
+  }
+
+  export type VolunteerApplicationOrderByWithRelationInput = {
+    id?: SortOrder
+    firstName?: SortOrder
+    lastName?: SortOrder
+    email?: SortOrder
+    phone?: SortOrder
+    interests?: SortOrder
+    motivation?: SortOrder
+    approved?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _relevance?: VolunteerApplicationOrderByRelevanceInput
+  }
+
+  export type VolunteerApplicationWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    email?: string
+    AND?: VolunteerApplicationWhereInput | VolunteerApplicationWhereInput[]
+    OR?: VolunteerApplicationWhereInput[]
+    NOT?: VolunteerApplicationWhereInput | VolunteerApplicationWhereInput[]
+    firstName?: StringFilter<"VolunteerApplication"> | string
+    lastName?: StringFilter<"VolunteerApplication"> | string
+    phone?: StringFilter<"VolunteerApplication"> | string
+    interests?: StringFilter<"VolunteerApplication"> | string
+    motivation?: StringFilter<"VolunteerApplication"> | string
+    approved?: BoolFilter<"VolunteerApplication"> | boolean
+    createdAt?: DateTimeFilter<"VolunteerApplication"> | Date | string
+    updatedAt?: DateTimeFilter<"VolunteerApplication"> | Date | string
+  }, "id" | "email">
+
+  export type VolunteerApplicationOrderByWithAggregationInput = {
+    id?: SortOrder
+    firstName?: SortOrder
+    lastName?: SortOrder
+    email?: SortOrder
+    phone?: SortOrder
+    interests?: SortOrder
+    motivation?: SortOrder
+    approved?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: VolunteerApplicationCountOrderByAggregateInput
+    _avg?: VolunteerApplicationAvgOrderByAggregateInput
+    _max?: VolunteerApplicationMaxOrderByAggregateInput
+    _min?: VolunteerApplicationMinOrderByAggregateInput
+    _sum?: VolunteerApplicationSumOrderByAggregateInput
+  }
+
+  export type VolunteerApplicationScalarWhereWithAggregatesInput = {
+    AND?: VolunteerApplicationScalarWhereWithAggregatesInput | VolunteerApplicationScalarWhereWithAggregatesInput[]
+    OR?: VolunteerApplicationScalarWhereWithAggregatesInput[]
+    NOT?: VolunteerApplicationScalarWhereWithAggregatesInput | VolunteerApplicationScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"VolunteerApplication"> | number
+    firstName?: StringWithAggregatesFilter<"VolunteerApplication"> | string
+    lastName?: StringWithAggregatesFilter<"VolunteerApplication"> | string
+    email?: StringWithAggregatesFilter<"VolunteerApplication"> | string
+    phone?: StringWithAggregatesFilter<"VolunteerApplication"> | string
+    interests?: StringWithAggregatesFilter<"VolunteerApplication"> | string
+    motivation?: StringWithAggregatesFilter<"VolunteerApplication"> | string
+    approved?: BoolWithAggregatesFilter<"VolunteerApplication"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"VolunteerApplication"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"VolunteerApplication"> | Date | string
+  }
+
   export type adminCreateInput = {
     fullname: string
     email: string
@@ -12782,6 +13944,94 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     paymentUrl?: NullableStringFieldUpdateOperationsInput | string | null
     paymentData?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VolunteerApplicationCreateInput = {
+    firstName: string
+    lastName: string
+    email: string
+    phone: string
+    interests: string
+    motivation: string
+    approved?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VolunteerApplicationUncheckedCreateInput = {
+    id?: number
+    firstName: string
+    lastName: string
+    email: string
+    phone: string
+    interests: string
+    motivation: string
+    approved?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VolunteerApplicationUpdateInput = {
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    interests?: StringFieldUpdateOperationsInput | string
+    motivation?: StringFieldUpdateOperationsInput | string
+    approved?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VolunteerApplicationUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    interests?: StringFieldUpdateOperationsInput | string
+    motivation?: StringFieldUpdateOperationsInput | string
+    approved?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VolunteerApplicationCreateManyInput = {
+    id?: number
+    firstName: string
+    lastName: string
+    email: string
+    phone: string
+    interests: string
+    motivation: string
+    approved?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VolunteerApplicationUpdateManyMutationInput = {
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    interests?: StringFieldUpdateOperationsInput | string
+    motivation?: StringFieldUpdateOperationsInput | string
+    approved?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VolunteerApplicationUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    interests?: StringFieldUpdateOperationsInput | string
+    motivation?: StringFieldUpdateOperationsInput | string
+    approved?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -13563,6 +14813,59 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type VolunteerApplicationOrderByRelevanceInput = {
+    fields: VolunteerApplicationOrderByRelevanceFieldEnum | VolunteerApplicationOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type VolunteerApplicationCountOrderByAggregateInput = {
+    id?: SortOrder
+    firstName?: SortOrder
+    lastName?: SortOrder
+    email?: SortOrder
+    phone?: SortOrder
+    interests?: SortOrder
+    motivation?: SortOrder
+    approved?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VolunteerApplicationAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type VolunteerApplicationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    firstName?: SortOrder
+    lastName?: SortOrder
+    email?: SortOrder
+    phone?: SortOrder
+    interests?: SortOrder
+    motivation?: SortOrder
+    approved?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VolunteerApplicationMinOrderByAggregateInput = {
+    id?: SortOrder
+    firstName?: SortOrder
+    lastName?: SortOrder
+    email?: SortOrder
+    phone?: SortOrder
+    interests?: SortOrder
+    motivation?: SortOrder
+    approved?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VolunteerApplicationSumOrderByAggregateInput = {
+    id?: SortOrder
   }
 
   export type blogsCreateNestedManyWithoutAuthorInput = {

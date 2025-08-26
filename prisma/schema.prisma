@@ -148,6 +148,21 @@ model Donation {
   @@map("donations")
 }
 
+model VolunteerApplication {
+  id        Int      @id @default(autoincrement())
+  firstName String
+  lastName  String
+  email     String   @unique
+  phone     String
+  interests String // Volunteer interests (stored as comma-separated values)
+  motivation String @db.LongText
+  approved Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("volunteer_applications")
+}
+
 enum Role {
   project_manager
   super_admin

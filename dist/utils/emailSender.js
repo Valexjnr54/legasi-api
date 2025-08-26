@@ -7,6 +7,8 @@ exports.sendWelcomeEmail = sendWelcomeEmail;
 exports.sendAssignTaskEmail = sendAssignTaskEmail;
 exports.sendSubmitTaskEmail = sendSubmitTaskEmail;
 exports.sendVerificationEmail = sendVerificationEmail;
+exports.sendContactFormMail = sendContactFormMail;
+exports.sendVolunteerMail = sendVolunteerMail;
 // src/utils/emailSender.ts
 const nodemailer_1 = __importDefault(require("nodemailer"));
 const ejs_1 = __importDefault(require("ejs"));
@@ -27,7 +29,7 @@ async function sendWelcomeEmail(email, subject, user, temp_password) {
     const template = fs_1.default.readFileSync(templatePath, 'utf-8');
     //   const template = await ejs.renderFile(templatePath, { fullname, email: email });
     const mailOptions = {
-        from: 'no-reply@legasi.org',
+        from: 'LEGASI <no-reply@legasi.org>',
         to: email,
         subject: subject,
         html: ejs_1.default.render(template, { user, email, temp_password }),
@@ -43,11 +45,12 @@ async function sendWelcomeEmail(email, subject, user, temp_password) {
 async function sendAssignTaskEmail(email, subject, user, project) {
     try {
         // Load the email template
-        const templatePath = path_1.default.resolve(process.cwd(), 'src/templates/email-templates/assign_task.ejs');
+        // const templatePath = path.resolve(process.cwd(), 'src/templates/email-templates/assign_task.ejs');
+        const templatePath = path_1.default.join(__dirname, '../templates/email-templates/assign_task.ejs');
         // Read the EJS template from the file
         const template = fs_1.default.readFileSync(templatePath, 'utf-8');
         const mailOptions = {
-            from: 'no-reply@legasi.org',
+            from: 'LEGASI <no-reply@legasi.org>',
             to: email,
             subject,
             html: ejs_1.default.render(template, { project, user, email }),
@@ -68,7 +71,7 @@ async function sendSubmitTaskEmail(email, subject, user, data) {
     // Read the EJS template from the file
     const template = fs_1.default.readFileSync(templatePath, 'utf-8');
     const mailOptions = {
-        from: 'no-reply@legasi.org',
+        from: 'LEGASI <no-reply@legasi.org>',
         to: email,
         subject,
         html: ejs_1.default.render(template, { user, email, data }),
@@ -87,12 +90,68 @@ async function sendVerificationEmail(email, subject, verification_code, user) {
     // Read the EJS template from the file
     const template = fs_1.default.readFileSync(templatePath, 'utf-8');
     const mailOptions = {
-        from: 'no-reply@smarthome.com',
+        from: 'LEGASI <no-reply@legasi.org>',
         to: email,
         subject: subject,
         html: ejs_1.default.render(template, { verification_code: verification_code, user: user, email: email }),
     };
     try {
+        await transporter.sendMail(mailOptions);
+        console.log('Email sent successfully.');
+    }
+    catch (error) {
+        console.error('Error sending email:', error);
+    }
+}
+async function sendContactFormMail(name, email, subject, message) {
+    // Load the email template
+    const admin_templatePath = path_1.default.join(__dirname, '../templates/email-templates/admin_contact_mail.ejs');
+    const templatePath = path_1.default.join(__dirname, '../templates/email-templates/send_contact_mail.ejs');
+    // Read the EJS template from the file
+    const admin_template = fs_1.default.readFileSync(admin_templatePath, 'utf-8');
+    const template = fs_1.default.readFileSync(templatePath, 'utf-8');
+    const admin_mailOptions = {
+        from: `${name} <${email}>`,
+        to: 'info@legasi.org',
+        subject,
+        html: ejs_1.default.render(admin_template, { name, email, subject, message }),
+    };
+    const mailOptions = {
+        from: 'LEGASI <no-reply@legasi.org>',
+        to: email,
+        subject: 'Thank you for contacting LEGASI',
+        html: ejs_1.default.render(template, { name, email, subject, message }),
+    };
+    try {
+        await transporter.sendMail(admin_mailOptions);
+        await transporter.sendMail(mailOptions);
+        console.log('Email sent successfully.');
+    }
+    catch (error) {
+        console.error('Error sending email:', error);
+    }
+}
+async function sendVolunteerMail(email, name, volunteer, subject) {
+    // Load the email template
+    const admin_templatePath = path_1.default.join(__dirname, '../templates/email-templates/admin_volunteer_mail.ejs');
+    const templatePath = path_1.default.join(__dirname, '../templates/email-templates/send_volunteer_mail.ejs');
+    // Read the EJS template from the file
+    const admin_template = fs_1.default.readFileSync(admin_templatePath, 'utf-8');
+    const template = fs_1.default.readFileSync(templatePath, 'utf-8');
+    const admin_mailOptions = {
+        from: `${name} <${email}>`,
+        to: 'info@legasi.org',
+        subject,
+        html: ejs_1.default.render(admin_template, { name, email, subject, volunteer }),
+    };
+    const mailOptions = {
+        from: 'LEGASI <no-reply@legasi.org>',
+        to: email,
+        subject: 'Thank You for Your Interest in Volunteerin to LEGASI!',
+        html: ejs_1.default.render(template, { name, email, subject, volunteer }),
+    };
+    try {
+        await transporter.sendMail(admin_mailOptions);
         await transporter.sendMail(mailOptions);
         console.log('Email sent successfully.');
     }

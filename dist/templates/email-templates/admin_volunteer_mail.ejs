@@ -8,6 +8,36 @@
     <meta content="telephone=no" name="format-detection">
     <title>New message</title>
     <style type="text/css">
+        .info-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f8f0ff;
+            border-radius: 8px;
+            border-left: 4px solid #880088;
+        }
+        .label {
+            font-weight: 600;
+            color: #4b0082;
+            display: inline-block;
+            width: 120px;
+        }
+        .footer { 
+            color: #666; 
+            font-size: 12px; 
+            margin-top: 30px;
+            text-align: center;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+        .urgent {
+            background-color: #fff0f0;
+            border: 1px solid #ffcccc;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
         a {
             text-decoration: none;
         }
@@ -322,23 +352,39 @@
                                                         <table cellpadding="0" cellspacing="0" width="100%" bgcolor="#fafafa" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:separate;border-spacing:0px;background-color:#fafafa;border-radius:10px" role="presentation">
                                                             <tr>
                                                                 <td align="left" style="padding:20px;Margin:0">
-                                                                    <h3 style="Margin:0;line-height:34px;mso-line-height-rule:exactly;font-family:Imprima, Arial, sans-serif;font-size:28px;font-style:normal;font-weight:bold;color:#2D3142">Welcome,&nbsp; <%= user.fullname%></h3>
+                                                                    <h3 style="Margin:0;line-height:34px;mso-line-height-rule:exactly;font-family:Imprima, Arial, sans-serif;font-size:28px;font-style:normal;font-weight:bold;color:#2D3142">Hello,&nbsp; Admin</h3>
                                                                     <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:Imprima, Arial, sans-serif;line-height:27px;color:#2D3142;font-size:18px"><br></p>
-                                                                    <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:Imprima, Arial, sans-serif;line-height:27px;color:#2D3142;font-size:18px">You’ve been assigned a new project task<br><br>
+                                                                    <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:Imprima, Arial, sans-serif;line-height:27px;color:#2D3142;font-size:18px"><div class="urgent"><strong>⚠️ ACTION REQUIRED:</strong> Please follow up with this potential volunteer within 48 hours.</div><br><br>
 
-                                                                        We have included details below:<br><br>
+                                                                        Here are the details:<br><br>
 
-                                                                        <strong>Project Title:</strong> <%= project.project_name%><br>
-                                                                        <strong>Project Task:</strong> <%= project.task%><br>
-                                                                        <strong>Start Date:</strong>   <%= project.start_date%>
-                                                                        <strong>End Date:</strong>     <%= project.end_date%><br><br>
+                                                                        <div class="info-section">
+                                                                            <h3 style="color: #4b0082; margin-top: 0;">Personal Information</h3>
+                                                                            <p><span class="label">Full Name:</span> <%= name %></p>
+                                                                            <p><span class="label">Email:</span> <a href="mailto:<%= email %>"><%= email %></a></p>
+                                                                            <p><span class="label">Phone:</span> <%= volunteer.phone %></p>
+                                                                        </div>
 
-                                                                        Please log in to your dashboard to view more details and get started.<br>
-                                                                        <br><br>
+                                                                        <div class="info-section">
+                                                                            <h3 style="color: #4b0082; margin-top: 0;">Volunteer Interests</h3>
+                                                                            <p><span class="label">Interests:</span> <%= volunteer.interests %></p>
+                                                                        </div>
 
-                                                                        In addition to accessing our platform, we encourage you to connect with our team. Feel free to reach out to our support team at info@legasi.org for any assistance you may need.<br><br>
-    
-                                                                        We look forward to collaborating with you and witnessing your success within our community.</p>
+                                                                        <div class="info-section">
+                                                                            <h3 style="color: #4b0082; margin-top: 0;">Motivation Message</h3>
+                                                                            <p><%= volunteer.motivation.replace(/\n/g, '<br>') %></p>
+                                                                        </div>
+
+                                                                        <div style="text-align: center; margin: 25px 0;">
+                                                                            <a href="mailto:<%= email %>?subject=Follow-up on your LEGASI volunteer application" 
+                                                                            style="background-color: #880088; color: white; padding: 12px 25px; text-decoration: none; border-radius: 30px; display: inline-block;">
+                                                                            Reply to Applicant
+                                                                            </a>
+                                                                        </div>
+
+                                                                        <div class="footer">
+                                                                            <p>This email was automatically generated by Legasi contact system.</p>
+                                                                        </div>
                                                                 </td>
                                                             </tr>
                                                         </table>

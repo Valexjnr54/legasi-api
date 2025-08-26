@@ -17,6 +17,7 @@ const categoryController_1 = require("../../controllers/Admininstration/category
 const blogController_1 = require("../../controllers/Admininstration/blogController");
 const donationController_1 = require("../../controllers/Admininstration/donationController");
 const commentController_1 = require("../../controllers/Admininstration/commentController");
+const volunteerController_1 = require("../../controllers/Admininstration/volunteerController");
 exports.adminRouter = express_1.default.Router();
 exports.adminRouter.post('/create-project-manager', authenticationMiddleware_1.authenticateJWT, projectManagerController_1.createProjectManager);
 exports.adminRouter.get('/project-managers', authenticationMiddleware_1.authenticateJWT, projectManagerController_1.allProjectManager);
@@ -51,6 +52,12 @@ exports.adminRouter.delete('/delete-comment', authenticationMiddleware_1.authent
 exports.adminRouter.put('/approve-comment', authenticationMiddleware_1.authenticateJWT, commentController_1.approveComment);
 exports.adminRouter.get('/approved-comments', authenticationMiddleware_1.authenticateJWT, commentController_1.getApprovedComments);
 exports.adminRouter.get('/pending-comment', authenticationMiddleware_1.authenticateJWT, commentController_1.getPendingComments);
+exports.adminRouter.get('/all-volunteers', authenticationMiddleware_1.authenticateJWT, volunteerController_1.allVolunteers);
+exports.adminRouter.get('/single-volunteer', authenticationMiddleware_1.authenticateJWT, volunteerController_1.singleVolunteer);
+exports.adminRouter.delete('/delete-volunteer', authenticationMiddleware_1.authenticateJWT, volunteerController_1.deleteVolunteer);
+exports.adminRouter.put('/approve-volunteer', authenticationMiddleware_1.authenticateJWT, volunteerController_1.approveVolunteer);
+exports.adminRouter.get('/approved-volunteers', authenticationMiddleware_1.authenticateJWT, volunteerController_1.getApprovedVolunteers);
+exports.adminRouter.get('/pending-volunteer', authenticationMiddleware_1.authenticateJWT, volunteerController_1.getPendingVolunteers);
 exports.adminRouter.get('/datas', authenticationMiddleware_1.authenticateJWT, dataEntryController_1.allDataEntry);
 exports.adminRouter.get('/data', authenticationMiddleware_1.authenticateJWT, dataEntryController_1.singleDataEntry);
 exports.adminRouter.delete('/delete-data', authenticationMiddleware_1.authenticateJWT, dataEntryController_1.deleteDataEntry);

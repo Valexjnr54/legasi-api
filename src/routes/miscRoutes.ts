@@ -1,14 +1,16 @@
 // src/routes/authRoutes.ts
 import express from 'express';
-import { add_comment, allMiscBlogs, createDonation, fetch_comment, handleWebhook, related_post, singleMiscBlog, verifyPayment } from '../controllers/miscController';
+import { add_comment, addVolunteer, allMiscBlogs, createDonation, fetch_comment, handleWebhook, related_post, singleMiscBlog, submitContactForm, verifyPayment } from '../controllers/miscController';
 
 export const miscRouter = express.Router();
 miscRouter.get('/blogs', allMiscBlogs);
 miscRouter.get('/blog', singleMiscBlog);
 
-miscRouter.post('/add-comment', add_comment)
-miscRouter.get('/fetch-comment', fetch_comment)
-miscRouter.get('/related-post', related_post)
+miscRouter.post('/add-comment', add_comment);
+miscRouter.get('/fetch-comment', fetch_comment);
+miscRouter.get('/related-post', related_post);
+
+miscRouter.post('/contact-us', submitContactForm);
 
 // Apply authentication middleware to protected routes
 miscRouter.post('/donations', createDonation);
@@ -16,3 +18,5 @@ miscRouter.get('/donations/verify/:reference', verifyPayment);
 
 // Webhook route - no authentication needed (but implement signature verification)
 miscRouter.post('/donations/webhook', handleWebhook);
+
+miscRouter.post('/add-volunteer-member', addVolunteer);

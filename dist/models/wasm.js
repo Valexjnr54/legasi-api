@@ -229,6 +229,19 @@ exports.Prisma.DonationScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.VolunteerApplicationScalarFieldEnum = {
+  id: 'id',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  email: 'email',
+  phone: 'phone',
+  interests: 'interests',
+  motivation: 'motivation',
+  approved: 'approved',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -317,6 +330,15 @@ exports.Prisma.DonationOrderByRelevanceFieldEnum = {
   status: 'status',
   paymentUrl: 'paymentUrl'
 };
+
+exports.Prisma.VolunteerApplicationOrderByRelevanceFieldEnum = {
+  firstName: 'firstName',
+  lastName: 'lastName',
+  email: 'email',
+  phone: 'phone',
+  interests: 'interests',
+  motivation: 'motivation'
+};
 exports.Role = exports.$Enums.Role = {
   project_manager: 'project_manager',
   super_admin: 'super_admin'
@@ -342,7 +364,8 @@ exports.Prisma.ModelName = {
   category: 'category',
   tag: 'tag',
   comment: 'comment',
-  Donation: 'Donation'
+  Donation: 'Donation',
+  VolunteerApplication: 'VolunteerApplication'
 };
 
 /**

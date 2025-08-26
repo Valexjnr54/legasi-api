@@ -50,6 +50,53 @@
             mso-hide: all;
         }
 
+        .header { 
+            color: #4b0082; 
+            text-align: center;
+            border-bottom: 2px solid #880088;
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+        .content {
+            color: #333;
+        }
+        .highlight {
+            background-color: #f8f0ff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #880088;
+            margin: 25px 0;
+        }
+        .cta {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .button {
+            background-color: #880088;
+            color: white;
+            padding: 14px 30px;
+            text-decoration: none;
+            border-radius: 30px;
+            display: inline-block;
+            font-weight: 600;
+        }
+        .footer {
+            color: #666;
+            font-size: 14px;
+            margin-top: 35px;
+            text-align: center;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        .social {
+            margin: 20px 0;
+        }
+        .social a {
+            color: #4b0082;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
         @media only screen and (max-width:600px) {
 
             p,
@@ -322,23 +369,44 @@
                                                         <table cellpadding="0" cellspacing="0" width="100%" bgcolor="#fafafa" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:separate;border-spacing:0px;background-color:#fafafa;border-radius:10px" role="presentation">
                                                             <tr>
                                                                 <td align="left" style="padding:20px;Margin:0">
-                                                                    <h3 style="Margin:0;line-height:34px;mso-line-height-rule:exactly;font-family:Imprima, Arial, sans-serif;font-size:28px;font-style:normal;font-weight:bold;color:#2D3142">Welcome,&nbsp; <%= user.fullname%></h3>
+                                                                    <h3 style="Margin:0;line-height:34px;mso-line-height-rule:exactly;font-family:Imprima, Arial, sans-serif;font-size:28px;font-style:normal;font-weight:bold;color:#2D3142">Dear,&nbsp; <%= name%></h3>
                                                                     <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:Imprima, Arial, sans-serif;line-height:27px;color:#2D3142;font-size:18px"><br></p>
-                                                                    <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:Imprima, Arial, sans-serif;line-height:27px;color:#2D3142;font-size:18px">You’ve been assigned a new project task<br><br>
+                                                                    <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:Imprima, Arial, sans-serif;line-height:27px;color:#2D3142;font-size:18px">Thank you for applying to volunteer with Legasi.org. We're thrilled that you want to join us in making a difference in our community.<br> We appreciate your desire to join the LEGASI mission<br><br>
 
-                                                                        We have included details below:<br><br>
+                                                                        <div style="background-color: #f8f0ff; padding: 15px; border-radius: 5px; margin: 20px 0; border-left: 4px solid #880088;">
+                                                                            <p><strong>We've received your application with the following details:</strong></p>
+                                                                            <ul>
+                                                                                <li><strong>Interests:</strong> <%= volunteer.interests %></li>
+                                                                                <li><strong>Motivation:</strong> <%= volunteer.motivation %></li>
+                                                                            </ul>
+                                                                        </div><br><br>
 
-                                                                        <strong>Project Title:</strong> <%= project.project_name%><br>
-                                                                        <strong>Project Task:</strong> <%= project.task%><br>
-                                                                        <strong>Start Date:</strong>   <%= project.start_date%>
-                                                                        <strong>End Date:</strong>     <%= project.end_date%><br><br>
+                                                                        <p>Our volunteer coordinator will review your application and contact you within <strong>3-5 business days</strong> to discuss next steps.</p>
+            
+                                                                        <p>In the meantime, you can:</p>
+                                                                        <ul>
+                                                                            <li>Follow us on <a href="https://www.instagram.com/legasi_ng" target="_blank">Instagram</a> to stay updated</li>
+                                                                            <li>Browse our <a href="https://legasi.org/volunteer">volunteer opportunities page</a></li>
+                                                                            <li>Learn more about our <a href="https://legasi.org/about">mission and values</a></li>
+                                                                        </ul>
 
-                                                                        Please log in to your dashboard to view more details and get started.<br>
-                                                                        <br><br>
+                                                                        <div class="cta">
+                                                                            <p>Have questions about volunteering?</p>
+                                                                            <a href="mailto:info@legasi.org" class="button">Contact Our Volunteer Team</a>
+                                                                        </div>
 
-                                                                        In addition to accessing our platform, we encourage you to connect with our team. Feel free to reach out to our support team at info@legasi.org for any assistance you may need.<br><br>
-    
-                                                                        We look forward to collaborating with you and witnessing your success within our community.</p>
+                                                                        <div class="footer">
+                                                                            <p><strong>Legasi.org Volunteer Program</strong></p>
+                                                                            <p>Creating lasting impact through dedicated service</p>
+                                                                            
+                                                                            <div class="social">
+                                                                                <a href="https://www.facebook.com/legasiNG">Facebook</a> | 
+                                                                                <a href="https://x.com/legasiNG">Twitter</a> | 
+                                                                                <a href="https://www.instagram.com/legasi_ng">Instagram</a>
+                                                                            </div>
+                                                                            
+                                                                            <p>Almara Centre - 22B, Kanta Road, off Independence Way, Kaduna North, NIGERIA<br>
+                                                                            Phone: +234 815 142 1551 | Email: info@legasi.org</p><br>
                                                                 </td>
                                                             </tr>
                                                         </table>

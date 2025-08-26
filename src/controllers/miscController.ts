@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { Prisma, PrismaClient } from '../models';
 import { body, validationResult } from 'express-validator';
 import axios from 'axios';
+import { sendContactFormMail, sendVolunteerMail } from '../utils/emailSender';
 
 const prisma = new PrismaClient();
 
@@ -387,7 +388,7 @@ export async function createDonation(request: Request, response: Response) {
     }
 
     // Generate a unique reference for the transaction
-    const reference = `DON_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    const reference = `LEGASI_${Date.now()}_${Math.random().toString(33).substr(2, 9)}`;
 
     // Create donation record with pending status
     const donation = await prisma.donation.create({
@@ -613,4 +614,121 @@ function verifySignature(signature: string | undefined, payload: string): boolea
   // Implement actual signature verification based on Squadco's documentation
   // This typically involves creating a HMAC signature and comparing it to the provided signature
   return true; // Placeholder
+}
+
+export async function addVolunteer(request: Request, response: Response) {
+  const { firstName, lastName, email, phone, interests, motivation } = request.body;
+
+  try {
+    // Validation rules
+    const validationRules = [
+      body('firstName').notEmpty().withMessage('First name is required').isLength({ min: 2 }).withMessage('First name must be at least 2 characters'),
+      body('lastName').notEmpty().withMessage('Last name is required').isLength({ min: 2 }).withMessage('Last name must be at least 2 characters'),
+      body('email').notEmpty().withMessage('Email is required').isEmail().withMessage('Must be a valid email'),
+      body('phone').notEmpty().withMessage('Phone number is required').isLength({ min: 10 }).withMessage('Phone number must be at least 10 characters'),
+      body('interests').isArray({ min: 1 }).withMessage('At least one volunteer interest must be selected'),
+      body('motivation').notEmpty().withMessage('Motivation is required').isLength({ min: 50 }).withMessage('Motivation must be at least 50 characters'),
+    ];
+
+    // Run validation
+    await Promise.all(validationRules.map(validation => validation.run(request)));
+
+    // Check for validation errors
+    const errors = validationResult(request);
+    if (!errors.isEmpty()) {
+      return response.status(400).json({ errors: errors.array() });
+    }
+
+    // Check if the email is already registered
+    const existingVolunteer = await prisma.volunteerApplication.findUnique({ where: { email } });
+    if (existingVolunteer) {
+      return response.status(400).json({ message: 'Email already registered' });
+    }
+
+    const existingVolunteerPhone = await prisma.volunteerApplication.findFirst({ where: { phone } });
+    if (existingVolunteerPhone) {
+      return response.status(400).json({ message: 'Phone Number already registered' });
+    }
+
+    // Create volunteer application in database
+    const application = await prisma.volunteerApplication.create({
+      data: {
+        firstName,
+        lastName,
+        email,
+        phone,
+        interests: interests.join(','), // Store interests as comma-separated string
+        motivation,
+        approved: false // Default to false for review
+      }
+    });
+
+    const fullname = application.firstName +' '+ application.lastName
+
+    await sendVolunteerMail(application.email, fullname, application, 'New Volunteer Application Received');
+
+    return response.status(201).json({ 
+      message: 'Volunteer application submitted successfully', 
+      data: application 
+    });
+  } catch (error) {
+    console.error('Vlounteer creation error:', error);
+    // Handle Prisma validation errors specifically
+    if (error instanceof Prisma.PrismaClientValidationError) {
+      return response.status(400).json({ 
+        message: 'Validation error - check your input data',
+        error: process.env.NODE_ENV === 'development' ? error.message : undefined
+      });
+    }
+    
+    // Handle other Prisma errors
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      return response.status(400).json({ 
+        message: 'Database error',
+        error: process.env.NODE_ENV === 'development' ? error.message : undefined
+      });
+    }
+
+    return response.status(500).json({ 
+      message: 'Internal server error',
+      error: process.env.NODE_ENV === 'development' ? error : undefined
+    });
+  }
+}
+
+export async function submitContactForm(request: Request, response: Response){
+  const { name, email, subject, message } = request.body;
+
+  try {
+    // Validation rules
+    const validationRules = [
+      body('name').notEmpty().withMessage('Full name is required').isLength({ min: 2 }).withMessage('Full name must be at least 2 characters'),
+      body('email').notEmpty().withMessage('Email is required').isEmail().withMessage('Must be a valid email'),
+      body('subject').notEmpty().withMessage('Subject is required').isLength({ min: 2 }).withMessage('Subject must be at least 2 characters'),
+      body('message').notEmpty().withMessage('Message is required').isLength({ min: 10 }).withMessage('Message must be at least 10 characters'),
+    ];
+
+    // Run validation
+    await Promise.all(validationRules.map(validation => validation.run(request)));
+
+    // Check for validation errors
+    const errors = validationResult(request);
+    if (!errors.isEmpty()) {
+      return response.status(400).json({ errors: errors.array() });
+    }
+    
+    await sendContactFormMail(name, email, subject, message)
+
+    return response.status(200).json({ 
+      status:200,
+      message: 'Message submitted successfully. We will be in touch soon!', 
+      // data: application 
+    });
+  } catch (error) {
+    console.error('Error Sending Mail:', error);
+    return response.status(500).json({ 
+      message: 'Internal server error',
+      error: process.env.NODE_ENV === 'development' ? error : undefined
+    });
+  }
 }
