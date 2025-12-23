@@ -32,6 +32,7 @@ async function allProject(request, response) {
                 createdAt: true,
                 updatedAt: true
             },
+            orderBy: { createdAt: 'desc' }
         });
         return response.status(200).json({ message: 'Project(s) fetched', data: allProjects });
     }

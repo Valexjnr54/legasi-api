@@ -140,6 +140,7 @@ async function allProjectManager(request, response) {
                 createdAt: true,
                 updatedAt: true
             },
+            orderBy: { createdAt: 'desc' }
         });
         return response.status(200).json({ message: 'User(s) fetched', data: allUsers });
     }

@@ -192,7 +192,8 @@ export async function allDataEntry(request: Request, response: Response) {
             project:true,
             createdAt: true,
             updatedAt: true
-        }
+        },
+        orderBy: { createdAt: 'desc' }
     });
     if(allDatas.length <= 0){
       return response.status(200).json({ message: 'No Data Entry(s) Found', data:allDatas });
