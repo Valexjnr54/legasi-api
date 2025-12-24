@@ -13,6 +13,7 @@ import { miscRouter } from './routes/miscRoutes';
 
 const app = express();
 
+app.set("trust proxy", true);
 app.use(express.json());
 // app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.urlencoded({ extended: true }));
